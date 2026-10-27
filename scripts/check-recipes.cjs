@@ -3,14 +3,14 @@ const elements=new Map(),handlers={};
 function element(key){if(!elements.has(key))elements.set(key,{value:'',innerHTML:'',textContent:'',hidden:true,setAttribute(){},scrollIntoView(){}});return elements.get(key);}
 const root={querySelector:element,querySelectorAll:()=>[],addEventListener:(k,f)=>handlers[k]=f};
 const c={document:{getElementById:()=>root},window:{addEventListener(){}},localStorage:{getItem:()=>null,setItem(){}},Date,console,FormData,Intl,setTimeout};vm.createContext(c);
-let code=fs.readFileSync('build/meal-bundle.js','utf8').replace(/\}\)\(\);\s*$/,'globalThis.testAPI={get state(){return state},defaults,dates,slot,recipes,recipe,scaled,shopping,shoppingText,ensurePlan,candidates,render,ingredients,WEEKLY,RECIPES};})();');
+let code=fs.readFileSync('build/meal-bundle.js','utf8').replace(/\}\)\(\);\s*$/,'globalThis.testAPI={get state(){return state},defaults,dates,slot,recipes,recipe,scaled,shopping,shoppingText,ensurePlan,candidates,populatePlan,complexity,fitsComplexity,render,ingredients,WEEKLY,RECIPES};})();');
 vm.runInContext(code,c);const a=c.testAPI,s=a.state;
 assert(a.recipes().length>=32);assert.equal(s.dinner+s.lunch,6);
 assert.equal(a.WEEKLY.featuredIds.length,6);assert.equal(new Set(a.WEEKLY.featuredIds).size,6);
 for(const id of a.WEEKLY.featuredIds)assert(a.recipe(id),'Missing featured recipe '+id);
 assert.equal(new Set(a.RECIPES.map(r=>r.id)).size,a.RECIPES.length,'Duplicate recipe IDs');
 assert.equal(a.dates().length,4);assert.equal(new Set(a.dates().map(d=>a.slot(d).recipe)).size,4);
-for(const r of a.recipes()){assert(r.active<=r.total);assert(r.method&&r.method.length>70,'Missing concise cooking method: '+r.id);for(const [id,q] of Object.entries(r.ingredients)){assert(a.ingredients()[id],id);assert(q>0);}assert(!/asparagus|spargel|beef/i.test(r.name+Object.keys(r.ingredients).map(k=>a.ingredients()[k][0]).join(' ')));}
+for(const r of a.recipes()){assert(['simple','confident','ambitious'].includes(a.complexity(r)));assert(r.active<=r.total);assert(r.method&&r.method.length>70,'Missing concise cooking method: '+r.id);for(const [id,q] of Object.entries(r.ingredients)){assert(a.ingredients()[id],id);assert(q>0);}assert(!/asparagus|spargel|beef/i.test(r.name+Object.keys(r.ingredients).map(k=>a.ingredients()[k][0]).join(' ')));}
 assert(a.recipes().filter(r=>r.protein==='pork').length>=4);
 const pizza=a.recipe('pizza');assert(pizza.ingredients.flour&&pizza.ingredients.yeast&&pizza.ingredients.water&&pizza.ingredients.dough);assert(pizza.ingredients.pork&&pizza.ingredients.pesto&&pizza.ingredients.ham&&pizza.ingredients.pepperoni&&pizza.ingredients.pepper&&pizza.ingredients.mushroom);assert.match(pizza.method,/son/);
 assert(!a.recipe('harira').prep);assert(!a.recipe('harira').ingredients.drychickpea);assert(a.recipe('harira').ingredients.chickpea);
@@ -41,3 +41,15 @@ handlers.click({target:{closest:()=>({dataset:{expand:jan},hasAttribute:()=>fals
 assert(element('[data-content]').innerHTML.includes('day-expanded'));
 s.start='2027-01-04';s.days=7;s.slots={};a.ensurePlan();const fullWeek=a.dates().map(d=>a.recipe(a.slot(d).recipe));assert.equal(fullWeek.filter(r=>r.protein==='vegetarian').length,1);assert.equal(fullWeek.filter(r=>r.protein!=='vegetarian').length,6);
 console.log('PASS: all recipes have methods; pork options; two-version pizza; 6 meat/fish meals per full week; portion and bulk calculations; exclusions; weekly rotation; saved plans; compact controls.');
+
+s.start='2026-10-27';s.days=4;s.slots={};s.complexity='simple';
+assert.equal(s.planComplexity,'ambitious','Choosing a level must not replace dinners yet');
+a.populatePlan();assert.equal(s.planComplexity,'simple');
+for(const d of a.dates()){assert(a.candidates(d).every(r=>r.complexity==='simple'));const r=a.recipe(a.slot(d).recipe);assert(r);assert.equal(r.complexity,'simple');assert(r.total<=a.slot(d).time);}
+assert.equal(new Set(a.dates().map(d=>a.slot(d).recipe)).size,4,'Simple mix should offer variety');
+s.complexity='confident';a.populatePlan();for(const d of a.dates())assert(a.candidates(d).every(r=>r.complexity!=='ambitious'));
+const d=a.dates()[0];a.slot(d).time=150;s.complexity='ambitious';a.populatePlan();assert(a.candidates(d).some(r=>r.id==='pizza'),'Ambitious makes projects available when time permits');
+s.custom.push({...a.recipe('greek'),id:'future-recipe',complexity:undefined});assert.equal(a.complexity(a.recipe('future-recipe')),'confident');
+s.complexity='simple';a.populatePlan();a.slot(d).time=1;a.ensurePlan();assert.equal(a.slot(d).recipe,null,'Never substitute an over-budget or harder recipe');a.render();assert.match(element('[data-content]').innerHTML,/No meal fits/);
+s.view='library';s.library='all';a.render();assert.match(element('[data-content]').innerHTML,/Homemade|pizza/i,'Collection retains ambitious recipes');
+console.log('PASS: complexity limits, explicit population, time budgets, variety, future recipe fallback and full collection.');

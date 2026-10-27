@@ -45,3 +45,8 @@ R('porkbroth','Ginger pork meatballs in coconut-lime broth',25,40,'pork','Asian'
 );
 
 ING.dough[0]='Coop ready-made pizza base (son’s version)';
+
+// Complexity describes technique and coordination, independently of total time.
+const SIMPLE_MEALS=new Set(['beansalad','leek','summertray','squashbowl','lentilsoup','curry','greek','squashsoup','salmontray','chickpeacurry','foobyfeta','walnut']);
+const AMBITIOUS_MEALS=new Set(['pizza','tuna','harira','roast','stuffed','aubergine','soupchicken','porkmiso']);
+for(const r of RECIPES)r.complexity=SIMPLE_MEALS.has(r.id)?'simple':AMBITIOUS_MEALS.has(r.id)?'ambitious':'confident';
