@@ -42,14 +42,26 @@ assert(element('[data-content]').innerHTML.includes('day-expanded'));
 s.start='2027-01-04';s.days=7;s.slots={};a.ensurePlan();const fullWeek=a.dates().map(d=>a.recipe(a.slot(d).recipe));assert.equal(fullWeek.filter(r=>r.protein==='vegetarian').length,1);assert.equal(fullWeek.filter(r=>r.protein!=='vegetarian').length,6);
 console.log('PASS: all recipes have methods; pork options; two-version pizza; 6 meat/fish meals per full week; portion and bulk calculations; exclusions; weekly rotation; saved plans; compact controls.');
 
-s.start='2026-10-27';s.days=4;s.slots={};s.complexity='simple';
-assert.equal(s.planComplexity,'ambitious','Choosing a level must not replace dinners yet');
-a.populatePlan();assert.equal(s.planComplexity,'simple');
-for(const d of a.dates()){assert(a.candidates(d).every(r=>r.complexity==='simple'));const r=a.recipe(a.slot(d).recipe);assert(r);assert.equal(r.complexity,'simple');assert(r.total<=a.slot(d).time);}
-assert.equal(new Set(a.dates().map(d=>a.slot(d).recipe)).size,4,'Simple mix should offer variety');
-s.complexity='confident';a.populatePlan();for(const d of a.dates())assert(a.candidates(d).every(r=>r.complexity!=='ambitious'));
-const d=a.dates()[0];a.slot(d).time=150;s.complexity='ambitious';a.populatePlan();assert(a.candidates(d).some(r=>r.id==='pizza'),'Ambitious makes projects available when time permits');
+
+assert(a.recipes().length>=60,'Expanded recipe variety');
+s.start='2026-10-27';s.days=4;s.slots={};s.weekdaySettings={};
+const mixedDates=a.dates();
+a.slot(mixedDates[0]).time=15;a.slot(mixedDates[0]).complexity='simple';
+a.slot(mixedDates[1]).time=35;a.slot(mixedDates[1]).complexity='confident';
+a.slot(mixedDates[2]).time=120;a.slot(mixedDates[2]).complexity='ambitious';
+a.slot(mixedDates[3]).time=30;a.slot(mixedDates[3]).complexity='simple';
+a.populatePlan();
+for(const d of mixedDates){const sl=a.slot(d),r=a.recipe(sl.recipe);assert(r,'Each day has a matching meal');assert(r.total<=sl.time);assert(a.fitsComplexity(r,sl.complexity));assert(a.candidates(d).every(x=>x.total<=sl.time&&a.fitsComplexity(x,sl.complexity)));}
+assert(a.candidates(mixedDates[2]).some(r=>r.id==='pizza'),'Projects remain available only on a suitable day');
+assert.equal(new Set(mixedDates.map(d=>a.slot(d).recipe)).size,4);
+const untouched=mixedDates.slice(1).map(d=>a.slot(d).recipe);
+handlers.change({target:{dataset:{slotComplexity:mixedDates[0]},value:'confident'}});
+assert.equal(a.slot(mixedDates[0]).complexity,'confident');assert.deepEqual(mixedDates.slice(1).map(d=>a.slot(d).recipe),untouched,'One day must not change other dinners');
+assert.equal(a.slot(mixedDates[3]).complexity,'simple','Different day keeps its own complexity');
+const firstPlan=mixedDates.map(d=>a.slot(d).recipe);a.populatePlan();assert(s.recentPlans.includes(firstPlan[0]));assert(mixedDates.some((d,i)=>a.slot(d).recipe!==firstPlan[i]),'New mix must provide fresh variety');
+a.render();assert.equal((element('[data-day-settings]').innerHTML.match(/data-slot-complexity=/g)||[]).length,4);
+assert.equal((element('[data-day-settings]').innerHTML.match(/data-slot-time=/g)||[]).length,4);
 s.custom.push({...a.recipe('greek'),id:'future-recipe',complexity:undefined});assert.equal(a.complexity(a.recipe('future-recipe')),'confident');
-s.complexity='simple';a.populatePlan();a.slot(d).time=1;a.ensurePlan();assert.equal(a.slot(d).recipe,null,'Never substitute an over-budget or harder recipe');a.render();assert.match(element('[data-content]').innerHTML,/No meal fits/);
-s.view='library';s.library='all';a.render();assert.match(element('[data-content]').innerHTML,/Homemade|pizza/i,'Collection retains ambitious recipes');
-console.log('PASS: complexity limits, explicit population, time budgets, variety, future recipe fallback and full collection.');
+a.slot(mixedDates[0]).time=1;a.ensurePlan();assert.equal(a.slot(mixedDates[0]).recipe,null);a.render();assert.match(element('[data-content]').innerHTML,/No meal fits/);
+s.view='library';s.library='all';a.render();assert.match(element('[data-content]').innerHTML,/pizza/i);
+console.log('PASS: 60 recipes; independent daily time and complexity; matching swaps; fresh mixes; empty states; full collection.');

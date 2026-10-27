@@ -62,8 +62,11 @@
 @media(max-width:460px){#evening-table .app{padding:14px}#evening-table .day-summary{grid-template-columns:44px minmax(0,1fr) auto;gap:8px}#evening-table .day-summary button{padding:8px;font-size:12px}#evening-table .meal-name{font-size:14px}#evening-table .day-expanded{padding:10px}}
 @media(pointer:coarse){#evening-table summary,#evening-table .text-button{min-height:44px}}
 #evening-table button.recipe-title{display:block;min-height:0;text-align:left;font:inherit;padding:0;border:0;background:transparent;color:inherit;white-space:normal;text-decoration:underline;text-decoration-color:var(--meal-line);text-underline-offset:3px}
-#evening-table .complexity-settings{background:var(--meal-soft);padding:12px;border-radius:10px;margin-bottom:12px}
-#evening-table .complexity-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:end}
+#evening-table .complexity-settings{background:var(--meal-soft);padding:12px;border-radius:10px;margin-top:12px;margin-bottom:12px}
+#evening-table .evening-settings{display:grid;grid-template-columns:58px minmax(0,1fr) minmax(0,1.3fr);gap:8px;align-items:center;margin-top:9px}
+#evening-table .evening-settings select{padding:8px;font-size:13px}
+#evening-table .evening-settings .field{font-size:11px;gap:3px}
+#evening-table .evening-settings .day-date{font-size:12px}
 #evening-table .complexity-settings p{font-size:12px;margin-top:7px}
 #evening-table .method{padding-left:22px;margin:8px 0 14px}
 #evening-table .method li{padding:4px 0;line-height:1.6}
@@ -72,11 +75,12 @@
 <section class="app" aria-label="Evening Table family meal planner">
 <header><div class="eyebrow">Evening Table</div><h2>A few days, one shop.</h2><p class="muted">No beef · no asparagus · plenty of vegetables</p><p class="muted">Usual week: 6 chicken, fish or pork meals · 1 vegetarian</p></header>
 <div class="setup">
-<section class="complexity-settings" aria-label="Meal complexity"><div class="complexity-row"><label class="field">How much cooking do you feel like?<select class="cursor-interaction" data-setting="complexity"><option value="simple">Simple</option><option value="confident">Confident cook</option><option value="ambitious">Ambitious</option></select></label><button class="primary cursor-interaction" data-action="populate">Find meals</button></div><p class="muted">Your maximum complexity: simple is straightforward; confident adds sauces and finishing touches; ambitious includes projects. Cooking time still applies.</p></section>
+
 <div class="grid"><label class="field">First dinner<input type="date" data-setting="start"></label><label class="field">Plan ahead<select data-setting="days" class="cursor-interaction"><option value="3">3 days</option><option value="4" selected>4 days</option></select></label></div>
 <details class="portion-settings"><summary class="cursor-interaction" data-portions>Portions & preferences</summary><div class="grid"><label class="field">Dinner portions<input type="number" min="1" max="12" value="3" data-setting="dinner"></label><label class="field">Next-day lunch portions<input type="number" min="0" max="12" value="3" data-setting="lunch"></label></div>
 <label class="check"><input type="checkbox" data-setting="lighter" class="cursor-interaction">More vegetables + smaller starch portions for the whole batch</label>
 </details>
+<section class="complexity-settings" aria-label="Set up each evening"><div class="between"><h3>Set up each evening</h3><button class="primary cursor-interaction" data-action="populate">Find meals</button></div><p class="muted">Choose time and maximum complexity for each day. Find meals gives you a fresh mix.</p><div data-day-settings></div></section>
 </div>
 <nav aria-label="Planner views"><button class="cursor-interaction" data-view="plan" aria-pressed="true">Meal plan</button><button class="cursor-interaction" data-view="shop" aria-pressed="false">Shopping list</button><button class="cursor-interaction" data-view="library" aria-pressed="false">Recipes</button></nav>
 <div data-content aria-live="polite"></div>
