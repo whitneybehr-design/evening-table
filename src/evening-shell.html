@@ -1,0 +1,84 @@
+<div id="evening-table" class="viz-dotted-background">
+<style>
+#evening-table{font:14px/1.5 system-ui,sans-serif;padding:16px 0;color:light-dark(#263c31,#e6eee8);--meal-bg:light-dark(#fcfaf5,#202923);--meal-soft:light-dark(#f0eee5,#2b352e);--meal-line:light-dark(#d6ddd2,#4b594d);--meal-accent:light-dark(#365c43,#b1d0ac);--meal-on:light-dark(#fff,#1b2a1e);--meal-sub:light-dark(#59675d,#bac6bd)}
+#evening-table *{box-sizing:border-box}
+#evening-table .app{max-width:720px;background:var(--meal-bg);margin:auto;padding:26px;border:1px solid var(--meal-line);border-radius:22px}
+#evening-table header{padding-right:70px;margin-bottom:22px}
+#evening-table h2{font:500 28px/1.2 Georgia,serif;margin:6px 0 10px}
+#evening-table h3{font-size:17px;font-weight:500;margin:0 0 8px}
+#evening-table h4{font-size:14px;font-weight:500;margin:18px 0 6px}
+#evening-table p{margin:6px 0}
+#evening-table .muted{color:var(--meal-sub);font-size:13px}
+#evening-table .eyebrow{color:var(--meal-sub);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+#evening-table .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#evening-table label.field{display:grid;gap:6px;font-size:13px}
+#evening-table input:not([type=checkbox]),#evening-table select,#evening-table textarea{width:100%;min-width:0;background:var(--meal-bg);color:inherit;border:1px solid var(--meal-line);border-radius:8px;padding:10px;font:inherit}
+#evening-table textarea{resize:vertical;min-height:100px}
+#evening-table button{background:var(--meal-bg);color:inherit;font:inherit;font-size:13px;border:1px solid var(--meal-line);border-radius:9px;padding:10px 13px;min-height:42px}
+#evening-table button[aria-pressed=true],#evening-table .primary{background:var(--meal-accent);color:var(--meal-on);border-color:var(--meal-accent)}
+#evening-table .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#evening-table .between{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+#evening-table .portion-note{margin:14px 0;background:var(--meal-soft);padding:12px 14px;border-radius:10px}
+#evening-table nav{display:flex;gap:7px;flex-wrap:wrap;margin:20px 0}
+#evening-table .day-card,#evening-table .recipe-card{padding:17px;border:1px solid var(--meal-line);border-radius:12px;margin:12px 0}
+#evening-table .day-settings{margin-top:12px}
+#evening-table .meal-name{font-family:Georgia,serif;font-size:20px;font-weight:500;margin:12px 0 4px}
+#evening-table .badge{color:var(--meal-sub);font-size:12px}
+#evening-table .ingredient{display:flex;gap:10px;align-items:start;padding:10px 0;border-bottom:1px solid var(--meal-line)}
+#evening-table input[type=checkbox]{accent-color:var(--meal-accent);width:18px;height:18px;flex-shrink:0;margin-top:3px}
+#evening-table .ingredient:has(input:checked) .item{text-decoration:line-through;color:var(--meal-sub)}
+#evening-table .item{flex:1;min-width:0}
+#evening-table .qty{white-space:nowrap;font-variant-numeric:tabular-nums}
+#evening-table .separator{border-top:1px solid var(--meal-line);margin-top:20px;padding-top:18px}
+#evening-table a{color:var(--meal-accent);text-underline-offset:3px}
+#evening-table .footer{margin-top:22px;font-size:12px;color:var(--meal-sub)}
+#evening-table .check{display:flex;gap:9px;align-items:center;margin:12px 0;font-size:13px}
+#evening-table [data-editor]{margin-top:18px;border-top:1px solid var(--meal-line);padding-top:18px}
+#evening-table [data-details]{margin-top:18px;border-top:1px solid var(--meal-line);padding-top:18px}
+@media(max-width:460px){#evening-table .app{padding:17px}#evening-table .grid{gap:10px}#evening-table header{padding-right:45px}#evening-table .meal-name{font-size:19px}}
+@media(pointer:coarse){#evening-table button{min-height:44px}#evening-table input,#evening-table select,#evening-table textarea{font-size:16px!important}}
+@media print{#evening-table header,#evening-table .setup,#evening-table nav,#evening-table button,#evening-table .footer,#evening-table [data-details],#evening-table [data-editor]{display:none}#evening-table .app{border:0;padding:0}#evening-table .ingredient{break-inside:avoid}}
+#evening-table .app{padding:20px;max-width:680px;border-radius:16px}
+#evening-table header{margin-bottom:16px}
+#evening-table h2{font-size:24px;margin:4px 0 6px}
+#evening-table h3{font-size:16px;margin:0}
+#evening-table nav{margin:14px 0;gap:6px}
+#evening-table .portion-settings{margin-top:8px;font-size:13px}
+#evening-table summary{padding:7px 0}
+#evening-table .portion-settings .grid{margin-top:8px}
+#evening-table .day-card{margin:0;padding:12px 0;border:0;border-bottom:1px solid var(--meal-line);border-radius:0}
+#evening-table .compact-days{margin:6px 0 14px}
+#evening-table .day-summary{display:grid;grid-template-columns:58px minmax(0,1fr) auto;align-items:center;gap:10px}
+#evening-table .day-date{display:grid;gap:1px}
+#evening-table .day-date .muted{font-size:11px}
+#evening-table .meal-name{font:500 15px/1.4 system-ui,sans-serif;margin:0 0 2px;overflow-wrap:anywhere}
+#evening-table .day-meal .muted{font-size:12px}
+#evening-table .day-expanded{margin-top:12px;padding:12px;background:var(--meal-soft);border-radius:9px}
+#evening-table .recipe-card{padding:12px;margin:8px 0}
+#evening-table .ingredient{padding:8px 0}
+#evening-table .footer{margin-top:14px}
+#evening-table .text-button{padding:4px 0;border:0;background:transparent;color:var(--meal-accent);text-decoration:underline;text-underline-offset:3px;min-height:32px}
+#evening-table .weekly-status{margin:4px 0 0}
+@media(max-width:460px){#evening-table .app{padding:14px}#evening-table .day-summary{grid-template-columns:44px minmax(0,1fr) auto;gap:8px}#evening-table .day-summary button{padding:8px;font-size:12px}#evening-table .meal-name{font-size:14px}#evening-table .day-expanded{padding:10px}}
+@media(pointer:coarse){#evening-table summary,#evening-table .text-button{min-height:44px}}
+#evening-table button.recipe-title{display:block;min-height:0;text-align:left;font:inherit;padding:0;border:0;background:transparent;color:inherit;white-space:normal;text-decoration:underline;text-decoration-color:var(--meal-line);text-underline-offset:3px}
+#evening-table .method{padding-left:22px;margin:8px 0 14px}
+#evening-table .method li{padding:4px 0;line-height:1.6}
+@media(pointer:coarse){#evening-table button.recipe-title{min-height:44px}}
+</style>
+<section class="app" aria-label="Evening Table family meal planner">
+<header><div class="eyebrow">Evening Table</div><h2>A few days, one shop.</h2><p class="muted">No beef · no asparagus · plenty of vegetables</p><p class="muted">Usual week: 6 chicken, fish or pork meals · 1 vegetarian</p></header>
+<div class="setup">
+<div class="grid"><label class="field">First dinner<input type="date" data-setting="start"></label><label class="field">Plan ahead<select data-setting="days" class="cursor-interaction"><option value="3">3 days</option><option value="4" selected>4 days</option></select></label></div>
+<details class="portion-settings"><summary class="cursor-interaction" data-portions>Portions & preferences</summary><div class="grid"><label class="field">Dinner portions<input type="number" min="1" max="12" value="3" data-setting="dinner"></label><label class="field">Next-day lunch portions<input type="number" min="0" max="12" value="3" data-setting="lunch"></label></div>
+<label class="check"><input type="checkbox" data-setting="lighter" class="cursor-interaction">More vegetables + smaller starch portions for the whole batch</label>
+</details>
+</div>
+<nav aria-label="Planner views"><button class="cursor-interaction" data-view="plan" aria-pressed="true">Meal plan</button><button class="cursor-interaction" data-view="shop" aria-pressed="false">Shopping list</button><button class="cursor-interaction" data-view="library" aria-pressed="false">Recipes</button></nav>
+<div data-content aria-live="polite"></div>
+<section data-details hidden></section><section data-editor hidden></section>
+<p data-message role="status" class="muted"></p>
+<details class="footer"><summary class="cursor-interaction">About Evening Table</summary><p>Meal choices and shopping checks save on this device. Recipes and quantities are editable drafts. The shared website receives published recipe updates; reload it for the latest collection. Coop product matching and household syncing are not connected.</p></details>
+</section>
+<!--SCRIPTS-->
+</div>
