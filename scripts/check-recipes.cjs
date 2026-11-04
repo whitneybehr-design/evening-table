@@ -1,9 +1,9 @@
 const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
-const elements=new Map(),handlers={};
+const elements=new Map(),handlers={};let persistedState;
 function element(key){if(!elements.has(key))elements.set(key,{value:'',innerHTML:'',textContent:'',hidden:true,setAttribute(){},scrollIntoView(){}});return elements.get(key);}
 const root={querySelector:element,querySelectorAll:()=>[],addEventListener:(k,f)=>handlers[k]=f};
-const c={document:{getElementById:()=>root},window:{addEventListener(){}},localStorage:{getItem:()=>null,setItem(){}},Date,console,FormData,Intl,setTimeout};vm.createContext(c);
-let code=fs.readFileSync('build/meal-bundle.js','utf8').replace(/\}\)\(\);\s*$/,'globalThis.testAPI={get state(){return state},defaults,dates,slot,recipes,recipe,scaled,shopping,shoppingText,ensurePlan,candidates,populatePlan,complexity,fitsComplexity,render,ingredients,WEEKLY,RECIPES};})();');
+const c={document:{getElementById:()=>root},window:{addEventListener(){}},localStorage:{getItem:()=>null,setItem(k,v){persistedState=v;}},Date,console,FormData,Intl,setTimeout};vm.createContext(c);
+let code=fs.readFileSync('build/meal-bundle.js','utf8').replace(/\}\)\(\);\s*$/,'globalThis.testAPI={get state(){return state},defaults,dates,slot,recipes,recipe,scaled,shopping,shoppingText,ensurePlan,candidates,populatePlan,isHidden,showDetails,complexity,fitsComplexity,render,ingredients,WEEKLY,RECIPES};})();');
 vm.runInContext(code,c);const a=c.testAPI,s=a.state;
 assert(a.recipes().length>=32);assert.equal(s.dinner+s.lunch,6);
 assert.equal(a.WEEKLY.featuredIds.length,6);assert.equal(new Set(a.WEEKLY.featuredIds).size,6);
@@ -65,3 +65,29 @@ s.custom.push({...a.recipe('greek'),id:'future-recipe',complexity:undefined});as
 a.slot(mixedDates[0]).time=1;a.ensurePlan();assert.equal(a.slot(mixedDates[0]).recipe,null);a.render();assert.match(element('[data-content]').innerHTML,/No meal fits/);
 s.view='library';s.library='all';a.render();assert.match(element('[data-content]').innerHTML,/pizza/i);
 console.log('PASS: 60 recipes; independent daily time and complexity; matching swaps; fresh mixes; empty states; full collection.');
+
+// Hidden recipes must be excluded everywhere suggestions can come from, even saved favourites.
+s.start='2026-11-04';s.days=4;s.slots={};s.view='plan';s.lighter=false;a.ensurePlan();
+const hiddenDate=a.dates()[0],hiddenId=a.slot(hiddenDate).recipe;
+const previousOtherMeals=a.dates().slice(1).map(d=>a.slot(d).recipe);
+if(!s.saved.includes(hiddenId))s.saved.push(hiddenId);
+s.checked=['oil|ml'];s.dinner=3;s.lunch=3;
+handlers.click({target:{closest:()=>({dataset:{toggleHidden:hiddenId},hasAttribute:()=>false})}});
+assert(a.isHidden(hiddenId));assert(a.recipe(hiddenId),'Keep recipe data for restoring');assert(s.saved.includes(hiddenId),'Preserve favourite status for undo');
+assert(!a.dates().some(d=>a.slot(d).recipe===hiddenId),'Replace a disliked planned dinner');
+assert.deepEqual(a.dates().slice(1).map(d=>a.slot(d).recipe),previousOtherMeals,'Keep other planned dinners');
+assert.deepEqual(s.checked,['oil|ml']);assert.equal(s.dinner+s.lunch,6);
+for(const d of a.dates())assert(!a.candidates(d,'surprise').some(r=>r.id===hiddenId));
+s.view='library';s.library='weekly';a.render();assert(!element('[data-content]').innerHTML.includes('data-detail="'+hiddenId+'"'));
+s.library='all';a.render();assert(!element('[data-content]').innerHTML.includes('data-detail="'+hiddenId+'"'));
+s.library='favourites';a.render();assert(!element('[data-content]').innerHTML.includes('data-detail="'+hiddenId+'"'));
+s.library='hidden';a.render();assert.match(element('[data-content]').innerHTML,/Restore to rotation/);assert(element('[data-content]').innerHTML.includes('data-detail="'+hiddenId+'"'));
+a.showDetails(hiddenId);assert.match(element('[data-details]').innerHTML,/Restore to rotation/);
+s.view='plan';a.render();handlers.click({target:{closest:()=>({dataset:{expand:hiddenDate},hasAttribute:()=>false})}});
+assert(!element('[data-content]').innerHTML.includes('<option value="'+hiddenId+'"'));
+const snapshot=persistedState;assert(JSON.parse(snapshot).hiddenRecipes.includes(hiddenId),'Persist exclusions');
+const reloadContext={...c,localStorage:{getItem:k=>k==='evening-table-v4'?snapshot:null,setItem(){}}};vm.createContext(reloadContext);vm.runInContext(code,reloadContext);assert(reloadContext.testAPI.isHidden(hiddenId),'Exclusion survives reload');
+handlers.click({target:{closest:()=>({dataset:{toggleHidden:hiddenId},hasAttribute:()=>false})}});
+assert(!reloadContext.testAPI.isHidden(hiddenId),'Restore works after reload');
+assert(reloadContext.testAPI.candidates(hiddenDate).some(r=>r.id===hiddenId),'Restored recipe can rotate again');
+console.log('PASS: hidden favourites and discoveries excluded from suggestions and manual choices; planned replacement; other dinners and shopping checks preserved; restore and reload.');
