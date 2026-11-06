@@ -1,13 +1,366 @@
 {
-  "updatedOn": "2026-10-25",
+  "updatedOn": "2026-11-06",
   "featuredIds": [
-    "cabbage",
-    "leek",
-    "cod",
-    "prawns",
-    "porkfennel",
-    "foobyfeta"
+    "weekly-20261106-squash-chicken",
+    "weekly-20261106-miso-leek-salmon",
+    "weekly-20261106-dill-pork",
+    "weekly-20261106-saffron-fish",
+    "weekly-20261106-chestnut-chicken",
+    "weekly-20261106-harissa-cabbage"
   ],
-  "ingredients": {},
-  "recipes": []
+  "ingredients": {
+    "redcurrypaste": [
+      "Red Thai curry paste",
+      "Pantry",
+      "g"
+    ],
+    "greekyoghurt": [
+      "Plain Greek yoghurt",
+      "Dairy & eggs",
+      "g"
+    ],
+    "cheddar": [
+      "Cheddar, grated",
+      "Dairy & eggs",
+      "g"
+    ],
+    "honey": [
+      "Runny honey",
+      "Pantry",
+      "g"
+    ],
+    "plainflour": [
+      "Plain flour",
+      "Pantry",
+      "g"
+    ],
+    "celeriac": [
+      "Celeriac / Knollensellerie",
+      "Vegetables & herbs",
+      "g",
+      "veg"
+    ],
+    "milk": [
+      "Milk",
+      "Dairy & eggs",
+      "ml"
+    ],
+    "cranberryjam": [
+      "Cranberry or lingonberry preserve",
+      "Pantry",
+      "g"
+    ],
+    "shallot": [
+      "Shallots",
+      "Vegetables & herbs",
+      "g"
+    ],
+    "freshchilli": [
+      "Fresh chilli",
+      "Vegetables & herbs",
+      "g"
+    ],
+    "fishstock": [
+      "Prepared fish stock / Fischbouillon",
+      "Pantry",
+      "ml"
+    ],
+    "bayleaf": [
+      "Dried bay leaves",
+      "Spices",
+      "whole"
+    ],
+    "sourcream": [
+      "Sour cream / Sauerrahm",
+      "Dairy & eggs",
+      "g"
+    ],
+    "cookingwater": [
+      "Water for cooking",
+      "At home",
+      "ml"
+    ],
+    "shiitake": [
+      "Dried shiitake mushrooms",
+      "Pantry",
+      "g"
+    ],
+    "sherry": [
+      "Dry sherry",
+      "Pantry",
+      "ml"
+    ],
+    "whitepepper": [
+      "Ground white pepper",
+      "Spices",
+      "tsp"
+    ],
+    "staranise": [
+      "Whole star anise",
+      "Spices",
+      "whole"
+    ],
+    "chestnut": [
+      "Chestnuts, peeled & cooked / Marroni",
+      "Chilled",
+      "g"
+    ],
+    "savoy": [
+      "Savoy cabbage / Wirz",
+      "Vegetables & herbs",
+      "g",
+      "veg"
+    ],
+    "butterbeans": [
+      "Butter beans, cooked & drained",
+      "Pantry",
+      "g"
+    ],
+    "raselhanout": [
+      "Ras el hanout",
+      "Spices",
+      "tsp"
+    ],
+    "preservedlemon": [
+      "Preserved lemon rind, drained",
+      "Pantry",
+      "g"
+    ]
+  },
+  "recipes": [
+    {
+      "id": "weekly-20261106-squash-chicken",
+      "name": "Red curry chicken & squash, ginger and lime",
+      "active": 15,
+      "total": 35,
+      "base": 4,
+      "protein": "chicken",
+      "style": "Thai inspired",
+      "complexity": "simple",
+      "ingredients": {
+        "oil": 15,
+        "onion": 300,
+        "squash": 800,
+        "rice": 120,
+        "redcurrypaste": 30,
+        "stock": 800,
+        "coconut": 300,
+        "chicken": 640,
+        "salt": 0.5,
+        "coriander": 0.5,
+        "chilli": 0.25,
+        "ginger": 20,
+        "lime": 1
+      },
+      "months": [
+        0,
+        1,
+        2,
+        9,
+        10,
+        11
+      ],
+      "source": "https://fooby.ch/en/recipes/14481/chicken-and-squash-one-pot",
+      "weekly": true,
+      "note": "Adapted from FOOBY: more squash, less coconut milk, plus ginger and lime. Four-portion quantities; onion and paste weights and the 35-minute total are estimates.",
+      "method": "Soften sliced onion, diced squash and grated ginger in the oil for 3 minutes. Stir in rice and curry paste.\nAdd bouillon and coconut milk; cover and simmer about 15 minutes until the rice and squash are nearly tender.\nSeason thin chicken strips with salt, add and gently simmer until cooked through, about 5–8 minutes. Finish with lime zest and juice, coriander and chilli."
+    },
+    {
+      "id": "weekly-20261106-miso-leek-salmon",
+      "name": "Salmon & leek linguine, miso-yoghurt sauce",
+      "active": 45,
+      "total": 45,
+      "base": 4,
+      "protein": "fish",
+      "style": "Modern European",
+      "complexity": "confident",
+      "ingredients": {
+        "linguine": 240,
+        "oil": 30,
+        "leek": 800,
+        "garlic": 2,
+        "honey": 21,
+        "miso": 30,
+        "greekyoghurt": 150,
+        "cheddar": 60,
+        "lemon": 1,
+        "salmon": 600,
+        "salt": 0.25,
+        "blackpepper": 0.25
+      },
+      "months": [
+        0,
+        1,
+        2,
+        9,
+        10,
+        11
+      ],
+      "source": "https://fooby.ch/en/recipes/27265/salmon-and-leek-pasta",
+      "weekly": true,
+      "note": "Adapted from FOOBY: extra leek and salmon, smaller pasta and cheese portions. Honey, miso and lemon conversions are approximate; source timing retained.",
+      "method": "Cook linguine until just tender, reserving 200 ml cooking water per original four-portion batch.\nSauté leeks in half the oil for 5–8 minutes; briefly add garlic. Stir in honey, miso and reserved water and simmer 2 minutes. Fold in pasta, then yoghurt, Cheddar and lemon juice over gentle heat.\nSeason salmon with salt and pepper and pan-fry in remaining oil, roughly 3 minutes per side depending on thickness, until cooked. Serve over the leeks and pasta."
+    },
+    {
+      "id": "weekly-20261106-dill-pork",
+      "name": "Dill pork meatballs, mustard gravy & celeriac mash",
+      "active": 30,
+      "total": 45,
+      "base": 4,
+      "protein": "pork",
+      "style": "Swedish inspired",
+      "complexity": "confident",
+      "ingredients": {
+        "pork": 400,
+        "egg": 1,
+        "onion": 100,
+        "breadcrumbs": 85,
+        "dill": 0.5,
+        "oil": 15,
+        "butter": 15,
+        "plainflour": 16,
+        "chickenstock": 400,
+        "dijon": 15,
+        "nutmeg": 0.25,
+        "celeriac": 600,
+        "potato": 300,
+        "milk": 150,
+        "greenbeans": 600,
+        "cranberryjam": 40,
+        "salt": 0.5,
+        "blackpepper": 0.25
+      },
+      "months": [
+        0,
+        1,
+        2,
+        9,
+        10,
+        11
+      ],
+      "source": "https://www.bbcgoodfood.com/recipes/classic-swedish-meatballs",
+      "weekly": true,
+      "note": "Adapted from Lulu Grimes / Good Food using chicken bouillon, Dijon and nutmeg, with added celeriac-potato mash and beans. Side quantities and 45-minute timing are estimates.",
+      "method": "Boil diced celeriac and potato until tender, about 20 minutes; drain and mash with warm milk and some salt. Steam the green beans.\nMix pork, egg, grated onion, breadcrumbs, half the dill, nutmeg and pepper; shape small balls. Brown in oil in batches.\nRemove the meatballs. Cook flour in butter for 2 minutes, whisk in chicken stock and Dijon, then simmer with the meatballs until cooked throughout. Finish with remaining dill; serve with mash, beans and preserve."
+    },
+    {
+      "id": "weekly-20261106-saffron-fish",
+      "name": "Saffron fish stew, fennel, orange & mint",
+      "active": 45,
+      "total": 90,
+      "base": 4,
+      "protein": "fish",
+      "style": "Mediterranean",
+      "complexity": "ambitious",
+      "ingredients": {
+        "saffron": 0.2,
+        "cookingwater": 270,
+        "oil": 20,
+        "shallot": 40,
+        "freshchilli": 10,
+        "fishstock": 240,
+        "wine": 240,
+        "thyme": 0.25,
+        "bayleaf": 1,
+        "orange": 1,
+        "fennelseed": 0.5,
+        "fennel": 600,
+        "pepper": 200,
+        "onion": 150,
+        "salt": 0.5,
+        "blackpepper": 0.25,
+        "cod": 600,
+        "sourcream": 120,
+        "mint": 0.25
+      },
+      "months": [
+        0,
+        1,
+        2,
+        9,
+        10,
+        11
+      ],
+      "source": "https://www.williams-sonoma.com/recipe/fish-stew-with-fennel-and-saffron.html",
+      "weekly": true,
+      "note": "Adapted from Williams Sonoma with fish bouillon replacing clam juice and extra fennel and fish. Metric conversions are approximate; source 45-minute prep plus 45-minute cook retained.",
+      "method": "Bloom saffron in 30 ml hot water per original batch for 20 minutes. Soften shallot and chilli in half the oil; add stock, wine, thyme, bay, orange peel, fennel seed, remaining water and saffron. Simmer 10 minutes, then strain.\nSauté fennel wedges, pepper strips and onion in remaining oil. Add strained broth, salt and pepper and simmer 10 minutes. Nestle in fish and poach gently until opaque, about 10 minutes.\nRemove bay and peel if any remain. Off heat, temper sour cream with a little broth and stir back in. Finish with chopped mint; reserve the orange flesh for another use."
+    },
+    {
+      "id": "weekly-20261106-chestnut-chicken",
+      "name": "Ginger chicken & chestnuts, shiitake and star anise",
+      "active": 30,
+      "total": 75,
+      "base": 4,
+      "protein": "chicken",
+      "style": "Chinese inspired",
+      "complexity": "confident",
+      "ingredients": {
+        "shiitake": 25,
+        "thigh": 590,
+        "sherry": 52.5,
+        "salt": 0.25,
+        "whitepepper": 0.375,
+        "soy": 45,
+        "oil": 25,
+        "springonion": 90,
+        "garlic": 4,
+        "ginger": 20,
+        "staranise": 2,
+        "chestnut": 180,
+        "cookingwater": 300,
+        "pakchoi": 600,
+        "rice": 120
+      },
+      "months": [
+        0,
+        1,
+        2,
+        9,
+        10,
+        11
+      ],
+      "source": "https://www.waitrose.com/ecom/recipe/braised-chicken-chestnuts",
+      "weekly": true,
+      "note": "Adapted from Charmaine Katz / Waitrose: sherry and one soy sauce, added pak choi and rice. Estimated 75 minutes includes a 30-minute mushroom soak; allow 30 minutes extra if needed.",
+      "method": "Soak shiitake in the measured hot water for 30–60 minutes until soft, reserving the liquid. Meanwhile coat chicken in half the sherry, some soy, salt and white pepper; refrigerate while soaking.\nFry spring-onion whites, garlic, ginger and star anise in 15 ml oil per original batch. Brown chicken, then add mushrooms, strained soaking liquid and remaining sherry and soy. Simmer 10 minutes; add cooked chestnuts and simmer 8–10 minutes until chicken is cooked.\nCook rice separately and stir-fry pak choi in remaining oil. Remove star anise and finish the braise with spring-onion greens."
+    },
+    {
+      "id": "weekly-20261106-harissa-cabbage",
+      "name": "Harissa savoy cabbage, butter beans & baked feta",
+      "active": 15,
+      "total": 45,
+      "base": 4,
+      "protein": "vegetarian",
+      "style": "North African inspired",
+      "complexity": "simple",
+      "ingredients": {
+        "savoy": 700,
+        "oil": 50,
+        "raselhanout": 3,
+        "butterbeans": 480,
+        "canTomato": 400,
+        "harissa": 40,
+        "preservedlemon": 20,
+        "feta": 200,
+        "chilli": 0.25,
+        "parsley": 0.25,
+        "dill": 0.25,
+        "sugar": 4,
+        "salt": 0.25
+      },
+      "months": [
+        0,
+        1,
+        2,
+        9,
+        10,
+        11
+      ],
+      "source": "https://www.bbcgoodfoodme.com/recipes/roasted-cabbage-with-harissa-butter-beans-baked-feta/",
+      "weekly": true,
+      "note": "Adapted from Esther Clark / Good Food Middle East. Drained beans, paste, rind and garnish weights estimated. The 45-minute estimate allows the method’s 15 + 20 minute oven stages and preparation.",
+      "method": "Heat the oven to 200°C conventional / 180°C fan. Coat savoy wedges with half the oil, ras el hanout and salt; roast 15 minutes.\nMix drained butter beans, tomatoes, harissa, preserved-lemon rind and sugar; pour around the cabbage. Put feta on a separate lined tray with most remaining oil and chilli. Roast both for another 20 minutes, until cabbage is tender.\nServe cabbage and beans with chunks of feta. Finish with parsley, dill and the last drizzle of oil."
+    }
+  ]
 }
