@@ -103,3 +103,19 @@ assert.equal(live.slot(short).recipe,null);
 assert(live.recipe(live.slot(flexible).recipe).total<=15);
 assert.match(element('[data-message]').textContent,/no exact match/);
 console.log('PASS: Find meals enforces exact complexity and leaves unmatched days empty.');
+
+// Repeated clicks must use the controls as shown, even if no change event was received.
+const third=live.dates()[2];
+const settings=[[short,15,'ambitious'],[flexible,45,'confident'],[third,25,'simple']];
+root.querySelectorAll=selector=>selector==='[data-slot-time],[data-slot-complexity]'?settings.flatMap(([date,time,level])=>[
+ {dataset:{slotTime:date},value:String(time)}, {dataset:{slotComplexity:date},value:level}
+]):[];
+for(let i=0;i<25;i++){
+ handlers.click({target:{closest:()=>({dataset:{action:'populate'},hasAttribute:()=>false})}});
+ assert.equal(live.slot(short).recipe,null);
+ for(const [date,time,level] of settings.slice(1)){
+  const r=live.recipe(live.slot(date).recipe);
+  assert(r && r.total<=time && r.complexity===level, 'Repeated Find meals must obey the controls');
+ }
+}
+console.log('PASS: 25 consecutive Find meals clicks use the visible settings.');
