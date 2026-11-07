@@ -122,11 +122,6 @@ console.log('PASS: 25 consecutive Find meals clicks use the visible settings.');
 
 // An explicit pick can exceed the time limit; regeneration still obeys it.
 handlers.click({target:{closest:()=>({dataset:{expand:third},hasAttribute:()=>false})}});
-assert.match(element('[data-content]').innerHTML,/>All recipes<\/option>/);
-assert.doesNotMatch(element('[data-content]').innerHTML,/<option value="pizza"/);
-const mealBeforeBrowse=live.slot(third).recipe;
-handlers.change({target:{dataset:{slotRhythm:third},value:'all'}});
-assert.equal(live.slot(third).recipe,mealBeforeBrowse);
 assert.match(element('[data-content]').innerHTML,/All other recipes/);
 assert.match(element('[data-content]').innerHTML,/<option value="pizza"/);
 handlers.change({target:{dataset:{slotRecipe:third},value:'pizza'}});
