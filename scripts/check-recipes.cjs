@@ -119,3 +119,15 @@ for(let i=0;i<25;i++){
  }
 }
 console.log('PASS: 25 consecutive Find meals clicks use the visible settings.');
+
+// An explicit pick can exceed the time limit; regeneration still obeys it.
+handlers.click({target:{closest:()=>({dataset:{expand:third},hasAttribute:()=>false})}});
+assert.match(element('[data-content]').innerHTML,/All other recipes/);
+assert.match(element('[data-content]').innerHTML,/<option value="pizza"/);
+handlers.change({target:{dataset:{slotRecipe:third},value:'pizza'}});
+assert.equal(live.slot(third).recipe,'pizza');
+assert.match(element('[data-content]').innerHTML,/Outside settings/);
+handlers.click({target:{closest:()=>({dataset:{action:'populate'},hasAttribute:()=>false})}});
+assert.notEqual(live.slot(third).recipe,'pizza');
+assert(live.recipe(live.slot(third).recipe).total<=25);
+console.log('PASS: manual choices can override daily settings without changing automatic matching.');
