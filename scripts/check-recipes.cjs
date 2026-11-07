@@ -51,14 +51,14 @@ a.slot(mixedDates[1]).time=35;a.slot(mixedDates[1]).complexity='confident';
 a.slot(mixedDates[2]).time=120;a.slot(mixedDates[2]).complexity='ambitious';
 a.slot(mixedDates[3]).time=30;a.slot(mixedDates[3]).complexity='simple';
 a.populatePlan();
-for(const d of mixedDates){const sl=a.slot(d),r=a.recipe(sl.recipe);assert(r,'Each day has a matching meal');assert(r.total<=sl.time);assert(a.fitsComplexity(r,sl.complexity));assert(a.candidates(d).every(x=>x.total<=sl.time&&a.fitsComplexity(x,sl.complexity)));}
+for(const d of mixedDates){const sl=a.slot(d),r=a.recipe(sl.recipe);assert(r,'Each day has a matching meal');assert(r.total<=sl.time);assert.equal(r.complexity,sl.complexity);assert(a.candidates(d).every(x=>x.total<=sl.time&&x.complexity===sl.complexity));}
 assert(a.candidates(mixedDates[2]).some(r=>r.id==='pizza'),'Projects remain available only on a suitable day');
 assert.equal(new Set(mixedDates.map(d=>a.slot(d).recipe)).size,4);
 const untouched=mixedDates.slice(1).map(d=>a.slot(d).recipe);
 handlers.change({target:{dataset:{slotComplexity:mixedDates[0]},value:'confident'}});
 assert.equal(a.slot(mixedDates[0]).complexity,'confident');assert.deepEqual(mixedDates.slice(1).map(d=>a.slot(d).recipe),untouched,'One day must not change other dinners');
 assert.equal(a.slot(mixedDates[3]).complexity,'simple','Different day keeps its own complexity');
-const firstPlan=mixedDates.map(d=>a.slot(d).recipe);a.populatePlan();assert(s.recentPlans.includes(firstPlan[0]));assert(mixedDates.some((d,i)=>a.slot(d).recipe!==firstPlan[i]),'New mix must provide fresh variety');
+const firstPlan=mixedDates.map(d=>a.slot(d).recipe);a.populatePlan();assert(firstPlan.filter(Boolean).every(id=>s.recentPlans.includes(id)));assert(mixedDates.some((d,i)=>a.slot(d).recipe!==firstPlan[i]),'New mix must provide fresh variety');
 a.render();assert.equal((element('[data-day-settings]').innerHTML.match(/data-slot-complexity=/g)||[]).length,4);
 assert.equal((element('[data-day-settings]').innerHTML.match(/data-slot-time=/g)||[]).length,4);
 s.custom.push({...a.recipe('greek'),id:'future-recipe',complexity:undefined});assert.equal(a.complexity(a.recipe('future-recipe')),'confident');
@@ -91,3 +91,15 @@ handlers.click({target:{closest:()=>({dataset:{toggleHidden:hiddenId},hasAttribu
 assert(!reloadContext.testAPI.isHidden(hiddenId),'Restore works after reload');
 assert(reloadContext.testAPI.candidates(hiddenDate).some(r=>r.id===hiddenId),'Restored recipe can rotate again');
 console.log('PASS: hidden favourites and discoveries excluded from suggestions and manual choices; planned replacement; other dinners and shopping checks preserved; restore and reload.');
+
+// Find meals must leave impossible settings empty, even when a simpler recipe fits.
+const live=reloadContext.testAPI;
+Object.assign(live.state,{start:'2026-11-07',days:3,slots:{},weekdaySettings:{}});
+const [short,flexible]=live.dates();
+Object.assign(live.slot(short),{time:15,complexity:'ambitious'});
+Object.assign(live.slot(flexible),{time:15,complexity:'any'});
+handlers.click({target:{closest:()=>({dataset:{action:'populate'},hasAttribute:()=>false})}});
+assert.equal(live.slot(short).recipe,null);
+assert(live.recipe(live.slot(flexible).recipe).total<=15);
+assert.match(element('[data-message]').textContent,/no exact match/);
+console.log('PASS: Find meals enforces exact complexity and leaves unmatched days empty.');
