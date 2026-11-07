@@ -45,6 +45,60 @@ return recipes().filter(r=>fitsEvening(r,s)&&(state.saved.includes(r.id)||(activ
 function ensurePlan(){for(const d of dates()){const s=slot(d),r=recipe(s.recipe);if(!r||isHidden(r.id)||(s.generated!==false&&r.total>s.time)||(s.generated&&!fitsEvening(r,s))){s.recipe=candidates(d).find(candidate=>fitsEvening(candidate,s))?.id||null;s.generated=true;}}}
 function scaled(r){const n=state.dinner+state.lunch,registry=ingredients();return Object.entries(r.ingredients).map(([id,q])=>{const item=registry[id];let amount=q*n/r.base;if(state.lighter&&item[3]==='starch')amount*=.65;if(state.lighter&&item[3]==='veg')amount*=1.25;if(item[2]==='whole'||item[2]==='clove')amount=Math.ceil(amount-1e-8);return {id,name:item[0],group:item[1],unit:item[2],qty:amount};});}
 function shopping(){const map=new Map();for(const d of dates()){const r=recipe(slot(d).recipe);if(!r)continue;for(const it of scaled(r)){const key=it.id+'|'+it.unit;if(!map.has(key))map.set(key,{...it,key,qty:0,meals:[]});const row=map.get(key);row.qty+=it.qty;row.meals.push(r.name);}}return [...map.values()].sort((a,b)=>a.group.localeCompare(b.group)||a.name.localeCompare(b.name));}
+const PLANNER_URL='https://whitneybehr-design.github.io/evening-table/';
+const SHARE_PREFIX='#shop=';
+function shoppingSnapshot(){
+ return [1,state.dinner,state.lunch,dates().map(d=>[d,recipe(slot(d).recipe)?.name||'No meal']),shopping().map(it=>[it.group,it.name,it.unit,it.qty,state.checked.includes(it.key)?1:0])];
+}
+async function limitedBytes(stream,max){
+ const reader=stream.getReader(),chunks=[];let size=0;
+ try{for(;;){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>max){await reader.cancel();throw Error('List is too large');}chunks.push(value);}}finally{reader.releaseLock();}
+ const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}return bytes;
+}
+async function encodeShopping(snapshot){
+ let bytes=new TextEncoder().encode(JSON.stringify(snapshot)),format='p';
+ if(bytes.length>65536)throw Error('List is too large');
+ if(typeof CompressionStream==='function'){
+  bytes=await limitedBytes(new Blob([bytes]).stream().pipeThrough(new CompressionStream('gzip')),65536);format='z';
+ }
+ return format+btoa(Array.from(bytes,b=>String.fromCharCode(b)).join('')).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+async function decodeShopping(payload){
+ if(!/^[pz][A-Za-z0-9_-]{1,90000}$/.test(payload))throw Error('Invalid link');
+ let bytes=Uint8Array.from(atob(payload.slice(1).replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));
+ if(payload[0]==='z')bytes=await limitedBytes(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip')),65536);
+ if(bytes.length>65536)throw Error('List is too large');
+ const data=JSON.parse(new TextDecoder().decode(bytes));
+ const label=(s,max)=>typeof s==='string'&&s.length>0&&s.length<=max;
+ if(!Array.isArray(data)||data.length!==5||data[0]!==1)throw Error('Unknown list version');
+ const [,dinner,lunch,meals,items]=data;
+ if(!Number.isInteger(dinner)||dinner<1||dinner>12||!Number.isInteger(lunch)||lunch<0||lunch>12||
+ !Array.isArray(meals)||meals.length<1||meals.length>4||!meals.every(m=>Array.isArray(m)&&m.length===2&&typeof m[0]==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(m[0])&&label(m[1],200))||
+ !Array.isArray(items)||!items.length||items.length>400||!items.every(it=>Array.isArray(it)&&it.length===5&&label(it[0],100)&&label(it[1],250)&&['g','ml','whole','clove','bunch','tsp'].includes(it[2])&&Number.isFinite(it[3])&&it[3]>0&&(it[4]===0||it[4]===1)))throw Error('Invalid list');
+ return data;
+}
+async function openSharedShopping(payload){
+ const app=root.querySelector('.app');
+ app.innerHTML='<h2>Opening shared shopping list…</h2>';
+ let snapshot;
+ try{snapshot=await decodeShopping(payload);}catch{
+  app.innerHTML=`<h2>Couldn’t open this shopping list</h2><p>Ask the sender to copy a fresh link.</p><a href="${PLANNER_URL}">Open Evening Table</a>`;return;
+ }
+ const [,dinner,lunch,meals,items]=snapshot,groups=[...new Set(items.map(it=>it[0]))];
+ const key='evening-table-shared-v1:'+payload;
+ let checked=items.map(it=>!!it[4]);
+ try{const stored=JSON.parse(localStorage.getItem(key));if(Array.isArray(stored)&&stored.length===items.length&&stored.every(v=>typeof v==='boolean'))checked=stored;}catch{}
+ app.innerHTML=`<div class="eyebrow">Evening Table</div><h2>Shared shopping list</h2><p>${dinner} dinner + ${lunch} lunch portions per meal</p><ul>${meals.map(([date,name])=>`<li>${E(date)} · ${E(name)}</li>`).join('')}</ul><p class="muted">Tick off items as you shop. Your checks save on this device.</p><p data-shared-progress role="status"></p>${groups.map(group=>`<h4>${E(group)}</h4>${items.map(([g,name,unit,qty],i)=>g===group?`<label class="ingredient"><input type="checkbox" data-shared-check="${i}" ${checked[i]?'checked':''}><span class="item">${E(name)}</span><span class="qty">${amount({unit,qty})}</span></label>`:'').join('')}`).join('')}<p><a href="${PLANNER_URL}">Open your own meal planner</a></p>`;
+ const progress=()=>{app.querySelector('[data-shared-progress]').textContent=`${checked.filter(Boolean).length} of ${items.length} items checked`;};
+ progress();
+ app.addEventListener('change',e=>{
+  const index=e.target.dataset.sharedCheck;
+  if(index===undefined)return;
+  checked[Number(index)]=e.target.checked;
+  try{localStorage.setItem(key,JSON.stringify(checked));}catch{}
+  progress();
+ });
+}
 function amount(it){return fmt(it.qty)+(it.unit==='whole'?'':(' '+it.unit));}
 function save(){try{localStorage.setItem('evening-table-v4',JSON.stringify(state));}catch{}if(window.openai?.setWidgetState){const privateContent={version:4,state};window.openai.setWidgetState({modelContent:{dinnerPortions:state.dinner,lunchPortions:state.lunch,start:state.start,days:state.days,preferences:'No beef or asparagus; vegetables; advanced home cook; roughly 6 of 7 dinners with chicken, fish or pork; tinned chickpeas for harira',plan:dates().map(d=>({date:d,recipe:recipe(slot(d).recipe)?.name}))},privateContent:JSON.stringify(privateContent).length<14500?privateContent:null}).catch(()=>{});}}
 function migrateOld(old){
@@ -68,7 +122,7 @@ if(state.view==='plan'){
 content.innerHTML=renderPlan();
 }else if(state.view==='shop'){
 const list=shopping(),groups=[...new Set(list.map(x=>x.group))];
-content.innerHTML=`<div class="between"><h3>One shop for ${state.days} dinners</h3><span class="badge">${state.days*state.dinner} dinner + ${state.days*state.lunch} lunch portions</span></div><p class="muted">${dates().map(d=>E(recipe(slot(d).recipe)?.name||'No meal')).join(' · ')}</p><p class="muted">Recipe quantities combined across all days. Tinned foods use drained weights. Check actual tin and pack sizes at Coop.</p><div class="row" style="margin:14px 0"><button class="primary cursor-interaction" data-action="copy">Copy list</button><button class="cursor-interaction" data-action="download">Download list</button><button class="cursor-interaction" data-action="print">Print</button></div><p class="muted">Tick ingredients you already have or have bought. Uncheck to include them again.</p>${groups.map(g=>`<h4>${E(g)}</h4>${list.filter(x=>x.group===g).map(it=>`<label class="ingredient"><input class="cursor-interaction" type="checkbox" data-check="${E(it.key)}" ${state.checked.includes(it.key)?'checked':''}><span class="item">${E(it.name)}${it.meals.length>1?`<span class="muted"> · ${it.meals.length} meals</span>`:''}</span><span class="qty">${amount(it)}</span></label>`).join('')}`).join('')}<p class="muted" style="margin-top:16px">${state.lighter?'Quantities include the whole-batch adjustment: 25% more vegetables, 35% less starch. ':''}Whole items and cloves are rounded up per meal; herbs can be fractional bunches. Stock means prepared liquid, including any water.</p><p><a href="https://www.coop.ch/en/food/c/m_0001" target="_blank" rel="noopener noreferrer">Open Coop groceries ↗</a></p>`;
+content.innerHTML=`<div class="between"><h3>One shop for ${state.days} dinners</h3><span class="badge">${state.days*state.dinner} dinner + ${state.days*state.lunch} lunch portions</span></div><p class="muted">${dates().map(d=>E(recipe(slot(d).recipe)?.name||'No meal')).join(' · ')}</p><p class="muted">Recipe quantities combined across all days. Tinned foods use drained weights. Check actual tin and pack sizes at Coop.</p><div class="row" style="margin:14px 0"><button class="primary cursor-interaction" data-action="share-shopping" ${list.length?'':'disabled'}>Share shopping list</button><button class="cursor-interaction" data-action="copy">Copy list</button><button class="cursor-interaction" data-action="download">Download list</button><button class="cursor-interaction" data-action="print">Print</button></div><div data-share-box hidden><label class="field">Shopping link<input data-share-url type="text" readonly></label><p class="muted">Anyone with this link can see these meals and ingredients. It’s a snapshot; later changes need a new link.</p><button class="cursor-interaction" data-action="copy-shopping-link">Copy link</button></div><p class="muted">Tick ingredients you already have or have bought. Uncheck to include them again.</p>${groups.map(g=>`<h4>${E(g)}</h4>${list.filter(x=>x.group===g).map(it=>`<label class="ingredient"><input class="cursor-interaction" type="checkbox" data-check="${E(it.key)}" ${state.checked.includes(it.key)?'checked':''}><span class="item">${E(it.name)}${it.meals.length>1?`<span class="muted"> · ${it.meals.length} meals</span>`:''}</span><span class="qty">${amount(it)}</span></label>`).join('')}`).join('')}<p class="muted" style="margin-top:16px">${state.lighter?'Quantities include the whole-batch adjustment: 25% more vegetables, 35% less starch. ':''}Whole items and cloves are rounded up per meal; herbs can be fractional bunches. Stock means prepared liquid, including any water.</p><p><a href="https://www.coop.ch/en/food/c/m_0001" target="_blank" rel="noopener noreferrer">Open Coop groceries ↗</a></p>`;
 }else{
 const all=recipes(),month=dateAt(state.start).getUTCMonth();const shown=all.filter(r=>state.library==='hidden'?isHidden(r.id):!isHidden(r.id)&&(state.library==='favourites'?state.saved.includes(r.id):state.library==='seasonal'?(activeDiscovery(r)&&r.months.includes(month)&&!state.saved.includes(r.id)):state.library==='weekly'?WEEKLY.featuredIds.includes(r.id):true));
 content.innerHTML=`<div class="between"><h3>Recipe collection · ${all.length}</h3><button class="cursor-interaction" data-action="new">Add a recipe</button></div><label class="field">Show<select data-library class="cursor-interaction"><option value="weekly" ${state.library==='weekly'?'selected':''}>This week’s six surprises</option><option value="hidden" ${state.library==='hidden'?'selected':''}>Hidden recipes (${all.filter(r=>isHidden(r.id)).length})</option><option value="all" ${state.library==='all'?'selected':''}>All recipes</option><option value="favourites" ${state.library==='favourites'?'selected':''}>Saved favourites</option><option value="seasonal" ${state.library==='seasonal'?'selected':''}>Seasonal discoveries</option></select></label><p class="muted">Save favourites to keep them. Use Don’t suggest again to exclude a recipe; restore it under Hidden recipes. These choices save on this device.</p>${!shown.length?`<p class="muted">${state.library==='hidden'?'No hidden recipes.':'No recipes in this view.'}</p>`:''}${shown.map(r=>`<article class="recipe-card"><div class="eyebrow">${isHidden(r.id)?'Hidden from rotation':state.saved.includes(r.id)?'Saved favourite':'Discovery'} · ${E(r.style)}</div><h3 style="margin-top:7px">${E(r.name)}</h3><p class="muted">${r.active} min hands-on · ${r.total} min total · ${COMPLEXITY[complexity(r)]} · ${r.source?'source linked':'draft ingredient list'}</p><div class="row"><button class="cursor-interaction" data-favourite="${E(r.id)}" aria-pressed="${state.saved.includes(r.id)}">${state.saved.includes(r.id)?'♥ Saved':'♡ Save'}</button><button class="cursor-interaction" data-detail="${E(r.id)}">Recipe</button><button class="cursor-interaction" data-edit="${E(r.id)}">Edit</button>${hideControl(r)}</div></article>`).join('')}`;
@@ -95,12 +149,29 @@ if(b.dataset.favourite){const id=b.dataset.favourite;state.saved=state.saved.inc
 if(b.dataset.cooked){state.cooked[b.dataset.cooked]=Date.now();}
 if(a==='new'){showEditor();return;}if(a==='cancel'||a==='close'){root.querySelector('[data-editor]').hidden=true;root.querySelector('[data-details]').hidden=true;return;}
 if(a==='populate'||a==='shuffle'){populatePlan();root.querySelector('[data-message]').textContent=dates().some(d=>!slot(d).recipe)?'Some evenings have no exact match. Adjust the time or choose Any complexity for those days.':'Fresh mix ready — each meal matches its evening’s settings.';}
+if(a==='share-shopping'){
+ const box=root.querySelector('[data-share-box]'),field=root.querySelector('[data-share-url]'),message=root.querySelector('[data-message]');
+ try{const snapshot=shoppingSnapshot();if(!snapshot[4].length)return;field.value=PLANNER_URL+SHARE_PREFIX+await encodeShopping(snapshot);box.hidden=false;field.focus();field.select();}
+ catch{message.textContent='Could not make a shopping link. You can still use Copy list.';}
+ return;
+}
+if(a==='copy-shopping-link'){
+ const field=root.querySelector('[data-share-url]'),message=root.querySelector('[data-message]');
+ try{await navigator.clipboard.writeText(field.value);message.textContent='Shopping link copied. Paste it into a text message.';}
+ catch{field.focus();field.select();message.textContent='Copy the selected link and paste it into a text message.';}
+ return;
+}
 if(a==='copy'){try{await navigator.clipboard.writeText(shoppingText());root.querySelector('[data-message]').textContent='Shopping list copied — ready to paste into a message.';}catch{root.querySelector('[data-message]').textContent='Clipboard unavailable here. Use Download list to save a text copy.';}return;}
 if(a==='download'){const blob=new Blob([shoppingText()],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='evening-table-'+state.start+'.txt';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);return;}
 if(a==='print'){window.print();return;}render();save();});
 root.addEventListener('submit',e=>{if(!e.target.matches('[data-editor-form]'))return;e.preventDefault();const f=new FormData(e.target),name=String(f.get('name')).trim(),source=String(f.get('source')||''),active=Number(f.get('active')),total=Number(f.get('total')),base=Number(f.get('base'));let error='';if(total<active)error='Total time must include hands-on time.';if(source&&!/^https?:\/\//i.test(source))error='Links must start with http or https.';const parsed={},extras={};for(const line of String(f.get('ingredients')).trim().split('\n')){let [n,q,u]=line.split('|').map(s=>s.trim());q=Number(q);if(!n||!Number.isFinite(q)||q<=0||!['g','ml','whole','clove','bunch','tsp'].includes(u)){error='Every ingredient needs a name, positive quantity and one of the listed units.';break;}if(/\b(beef|asparagus|spargel|rindfleisch)\b/i.test(n))error='Beef and asparagus are excluded from your collection.';const key=Object.keys(ingredients()).find(k=>ingredients()[k][0].toLowerCase()===n.toLowerCase()&&ingredients()[k][2]===u)||'custom-'+hash(n.toLowerCase()+'|'+u);if(!ingredients()[key])extras[key]=[n,'Other',u];parsed[key]=(parsed[key]||0)+q;}
 if(!name||base<1||base>30||active<1||total>1440||/\b(beef|asparagus|spargel|rindfleisch)\b/i.test(name))error=error||'Check the name, yield and cooking times.';if(error){root.querySelector('[data-form-error]').textContent=error;return;}
 Object.assign(state.extraIngredients,extras);const id=editing||'custom-'+Date.now(),old=recipe(id);const r={id,name,active,total,base,complexity:COMPLEXITY[f.get('complexity')]?String(f.get('complexity')):'confident',ingredients:parsed,protein:String(f.get('protein')),style:old?.style||'Your recipe',months:old?.months||YEAR,method:String(f.get('method')),source};if(editing)state.edits[id]=r;else state.custom.push(r);if(!state.saved.includes(id))state.saved.push(id);state.view='library';render();save();showDetails(id);});
+if(typeof location!=='undefined'){
+ const initialHash=location.hash;
+ window.addEventListener('hashchange',()=>{if(initialHash.startsWith(SHARE_PREFIX)||location.hash.startsWith(SHARE_PREFIX))location.reload();});
+ if(initialHash.startsWith(SHARE_PREFIX)){void openSharedShopping(initialHash.slice(SHARE_PREFIX.length));return;}
+}
 try{const saved=localStorage.getItem('evening-table-v4');if(saved)state={...defaults(),...JSON.parse(saved)};else {const old=localStorage.getItem('evening-table-v3');if(old)state=migrateOld(JSON.parse(old));}}catch{}
 restore(window.openai?.widgetState);ensurePlan();sync();
 window.addEventListener('openai:set_globals',e=>restore(e.detail?.globals?.widgetState));

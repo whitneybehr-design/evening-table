@@ -2,8 +2,8 @@ const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
 const elements=new Map(),handlers={};let persistedState;
 function element(key){if(!elements.has(key))elements.set(key,{value:'',innerHTML:'',textContent:'',hidden:true,setAttribute(){},scrollIntoView(){}});return elements.get(key);}
 const root={querySelector:element,querySelectorAll:()=>[],addEventListener:(k,f)=>handlers[k]=f};
-const c={document:{getElementById:()=>root},window:{addEventListener(){}},localStorage:{getItem:()=>null,setItem(k,v){persistedState=v;}},Date,console,FormData,Intl,setTimeout};vm.createContext(c);
-let code=fs.readFileSync('build/meal-bundle.js','utf8').replace(/\}\)\(\);\s*$/,'globalThis.testAPI={get state(){return state},defaults,dates,slot,recipes,recipe,scaled,shopping,shoppingText,ensurePlan,candidates,populatePlan,isHidden,showDetails,complexity,fitsComplexity,render,ingredients,WEEKLY,RECIPES};})();');
+const c={document:{getElementById:()=>root},window:{addEventListener(){}},localStorage:{getItem:()=>null,setItem(k,v){persistedState=v;}},Date,console,FormData,Intl,setTimeout,TextEncoder,TextDecoder,Blob,CompressionStream,DecompressionStream,btoa,atob};vm.createContext(c);
+let code=fs.readFileSync('build/meal-bundle.js','utf8').replace(/\}\)\(\);\s*$/,'globalThis.testAPI={get state(){return state},defaults,dates,slot,recipes,recipe,scaled,shopping,shoppingText,shoppingSnapshot,encodeShopping,decodeShopping,ensurePlan,candidates,populatePlan,isHidden,showDetails,complexity,fitsComplexity,render,ingredients,WEEKLY,RECIPES};})();');
 vm.runInContext(code,c);const a=c.testAPI,s=a.state;
 assert(a.recipes().length>=32);assert.equal(s.dinner+s.lunch,6);
 assert.equal(a.WEEKLY.featuredIds.length,6);assert.equal(new Set(a.WEEKLY.featuredIds).size,6);
@@ -131,3 +131,14 @@ handlers.click({target:{closest:()=>({dataset:{action:'populate'},hasAttribute:(
 assert.notEqual(live.slot(third).recipe,'pizza');
 assert(live.recipe(live.slot(third).recipe).total<=25);
 console.log('PASS: manual choices can override daily settings without changing automatic matching.');
+
+(async()=>{
+ const current=JSON.stringify(live.state);
+ const snapshot=live.shoppingSnapshot();
+ const payload=await live.encodeShopping(snapshot);
+ assert(payload.startsWith('z')&&payload.length<5000);
+ assert.equal(JSON.stringify(await live.decodeShopping(payload)),JSON.stringify(snapshot));
+ assert.equal(JSON.stringify(live.state),current,'Sharing must not modify the plan');
+ await assert.rejects(live.decodeShopping('pbad'));
+ console.log('PASS: compressed shopping links preserve meals, quantities and checks without modifying the plan.');
+})().catch(e=>{console.error(e);process.exitCode=1;});
