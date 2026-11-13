@@ -1,12 +1,12 @@
 {
-  "updatedOn": "2026-11-06",
+  "updatedOn": "2026-11-13",
   "featuredIds": [
-    "weekly-20261106-squash-chicken",
-    "weekly-20261106-miso-leek-salmon",
-    "weekly-20261106-dill-pork",
-    "weekly-20261106-saffron-fish",
-    "weekly-20261106-chestnut-chicken",
-    "weekly-20261106-harissa-cabbage"
+    "weekly-20261113-dukkah-chicken",
+    "weekly-20261113-tarragon-chicken",
+    "weekly-20261113-sage-pork",
+    "weekly-20261113-citrus-seabass",
+    "weekly-20261113-sherry-cod",
+    "weekly-20261113-pumpkin-tahini"
   ],
   "ingredients": {
     "redcurrypaste": [
@@ -125,6 +125,47 @@
       "Preserved lemon rind, drained",
       "Pantry",
       "g"
+    ],
+    "chickenthighbone": [
+      "Bone-in chicken thighs / Pouletschenkel",
+      "Meat & fish",
+      "g"
+    ],
+    "panko": [
+      "Panko breadcrumbs",
+      "Pantry",
+      "g"
+    ],
+    "datesdried": [
+      "Dried pitted dates",
+      "Pantry",
+      "g"
+    ],
+    "porksteak": [
+      "Boneless pork loin steaks / Schweinsnierstück",
+      "Meat & fish",
+      "g"
+    ],
+    "seabass": [
+      "Skin-on sea bass fillets / Wolfsbarschfilets",
+      "Meat & fish",
+      "g"
+    ],
+    "anchovy": [
+      "Anchovy fillets, drained / Sardellen",
+      "Pantry",
+      "g"
+    ],
+    "parsnip": [
+      "Parsnips / Pastinaken",
+      "Vegetables & herbs",
+      "g",
+      "veg"
+    ],
+    "tarragon": [
+      "Tarragon / Estragon",
+      "Vegetables & herbs",
+      "bunch"
     ]
   },
   "recipes": [
@@ -361,6 +402,212 @@
       "weekly": true,
       "note": "Adapted from Esther Clark / Good Food Middle East. Drained beans, paste, rind and garnish weights estimated. The 45-minute estimate allows the method’s 15 + 20 minute oven stages and preparation.",
       "method": "Heat the oven to 200°C conventional / 180°C fan. Coat savoy wedges with half the oil, ras el hanout and salt; roast 15 minutes.\nMix drained butter beans, tomatoes, harissa, preserved-lemon rind and sugar; pour around the cabbage. Put feta on a separate lined tray with most remaining oil and chilli. Roast both for another 20 minutes, until cabbage is tender.\nServe cabbage and beans with chunks of feta. Finish with parsley, dill and the last drizzle of oil."
+    },
+    {
+      "id": "weekly-20261113-dukkah-chicken",
+      "name": "Dukkah-crusted chicken, celeriac, dates & green olives",
+      "active": 30,
+      "total": 65,
+      "base": 4,
+      "protein": "chicken",
+      "style": "Middle Eastern inspired",
+      "complexity": "ambitious",
+      "ingredients": {
+        "chickenthighbone": 800,
+        "celeriac": 800,
+        "lime": 1,
+        "oil": 40,
+        "honey": 25,
+        "hazelnut": 30,
+        "sesame": 12,
+        "cumin": 1,
+        "corianderseed": 1,
+        "salt": 0.75,
+        "plainflour": 25,
+        "panko": 65,
+        "datesdried": 60,
+        "olive": 90
+      },
+      "months": [
+        9,
+        10,
+        11,
+        0,
+        1
+      ],
+      "source": "https://fooby.ch/en/recipes/25185/crispy-chicken-tray-bake",
+      "weekly": true,
+      "note": "Adapted from FOOBY. Uses homemade dukkah and honey in place of the date syrup, with less dried fruit and a smaller portion of bone-in thighs. Quantities and timing are estimates.",
+      "method": "Heat the oven to 200°C. Toast hazelnuts and sesame, then crush coarsely with cumin and ground coriander. Stir half the mixture into lime juice, honey, olive oil and salt.\nSet aside some glaze for celeriac wedges. Dust chicken in flour, brush with the remaining glaze and press into a mixture of panko and the reserved dry dukkah. Arrange with the glazed celeriac on a wide lined tray.\nRoast 25 minutes, then tuck the chopped dates and green olives around the celeriac. Roast another 10–15 minutes until the chicken is cooked through and the wedges are tender. Spoon the date and olive juices over the vegetables."
+    },
+    {
+      "id": "weekly-20261113-tarragon-chicken",
+      "name": "Tarragon chicken & leeks with lemon pan jus",
+      "active": 20,
+      "total": 30,
+      "base": 2,
+      "protein": "chicken",
+      "style": "French inspired",
+      "complexity": "simple",
+      "ingredients": {
+        "chicken": 330,
+        "leek": 360,
+        "oil": 20,
+        "wine": 100,
+        "chickenstock": 200,
+        "lemon": 1,
+        "tarragon": 0.25,
+        "salt": 0.25,
+        "blackpepper": 0.25
+      },
+      "months": [
+        9,
+        10,
+        11,
+        0,
+        1,
+        2
+      ],
+      "source": "https://www.theguardian.com/food/article/2024/jul/30/nigel-slaters-recipe-for-chicken-with-leeks-lemon-and-tarragon",
+      "weekly": true,
+      "note": "Adapted from Nigel Slater in The Observer. Uses boneless breasts, less oil and a little lemon zest. Leek weight and wine volume are estimates.",
+      "method": "Pat the chicken dry, season it and brown it on both sides in olive oil. Transfer it to a plate while you wash and slice the leeks.\nSweat the leeks in the same pan, covered, until silky. Add the wine and scrape up the browned bits, then pour in the stock and return the chicken. Simmer until the meat is cooked through and the sauce lightly coats a spoon.\nTake the pan off the heat. Add chopped tarragon, lemon zest and enough lemon juice to brighten the sauce."
+    },
+    {
+      "id": "weekly-20261113-sage-pork",
+      "name": "Sage pork steaks, caramelised apples & mustard cabbage",
+      "active": 20,
+      "total": 30,
+      "base": 4,
+      "protein": "pork",
+      "style": "British inspired",
+      "complexity": "simple",
+      "ingredients": {
+        "porksteak": 560,
+        "apple": 300,
+        "onion": 120,
+        "savoy": 500,
+        "sage": 0.25,
+        "chickenstock": 200,
+        "dijon": 15,
+        "oil": 25,
+        "salt": 0.5,
+        "blackpepper": 0.25
+      },
+      "months": [
+        9,
+        10,
+        11,
+        0,
+        1,
+        2
+      ],
+      "source": "https://www.bbcgoodfood.com/recipes/mustardy-pork-apples",
+      "weekly": true,
+      "note": "Adapted from Good Food. Adds savoy cabbage in place of a starchy side and more stock to cook the greens. Produce weights and adapted timing are estimates.",
+      "method": "Season the pork and sear on both sides in a wide oiled pan. Transfer to a plate. Brown apple wedges and sliced onion in the same pan, then add torn sage and shredded savoy.\nStir Dijon into the stock and pour it into the pan. Simmer until the cabbage is tender and the liquid starts to thicken. Return the pork and any juices and finish cooking it gently.\nRest the steaks briefly while the sauce reduces to a light glaze. Spoon the apples, sage and mustard cabbage over the pork."
+    },
+    {
+      "id": "weekly-20261113-citrus-seabass",
+      "name": "Crisp sea bass, orange broccoli & anchovy-caper dressing",
+      "active": 25,
+      "total": 30,
+      "base": 2,
+      "protein": "fish",
+      "style": "Mediterranean inspired",
+      "complexity": "confident",
+      "ingredients": {
+        "seabass": 280,
+        "broccoli": 350,
+        "orange": 1,
+        "lemon": 1,
+        "capers": 25,
+        "anchovy": 15,
+        "oil": 35,
+        "salt": 0.125,
+        "blackpepper": 0.25
+      },
+      "months": [
+        9,
+        10,
+        11
+      ],
+      "source": "https://www.bbcgoodfood.com/recipes/pan-fried-sea-bass-citrus-dressed-broccoli",
+      "weekly": true,
+      "note": "Adapted from Gordon Ramsay’s Good Food recipe with less oil and capers. Broccoli and drained garnish weights are estimates. Buy scaled, skin-on fillets.",
+      "method": "Cut the orange into segments and squeeze the trimmings into a bowl. Blanch the broccoli for 1–2 minutes, drain well and char briefly in a hot pan. Toss with the orange segments, juice and a splash of oil.\nPat the fish dry and season lightly. Sear skin-side down in oil for about 3–4 minutes, pressing it flat briefly. Flip and cook until just done, about 1–2 minutes depending on thickness.\nSizzle the drained capers and chopped anchovies in the remaining oil. Take off the heat, add lemon zest and juice, and spoon around the fish so the skin stays crisp."
+    },
+    {
+      "id": "weekly-20261113-sherry-cod",
+      "name": "Sherry-glazed cod, parsnip mash & garlicky spinach",
+      "active": 25,
+      "total": 35,
+      "base": 4,
+      "protein": "fish",
+      "style": "European inspired",
+      "complexity": "confident",
+      "ingredients": {
+        "cod": 480,
+        "parsnip": 550,
+        "spinach": 300,
+        "plainflour": 20,
+        "oil": 30,
+        "garlic": 3,
+        "sherryvinegar": 45,
+        "sugar": 12,
+        "butter": 25,
+        "parsley": 0.25,
+        "lemon": 1,
+        "salt": 0.5,
+        "blackpepper": 0.25
+      },
+      "months": [
+        9,
+        10,
+        11,
+        0,
+        1,
+        2
+      ],
+      "source": "https://www.bbcgoodfood.com/recipes/sticky-cod-celeriac-parsley-mash",
+      "weekly": true,
+      "note": "Adapted from Jennifer Joyce’s Good Food recipe. Uses parsnips, adds spinach and skips the chilli. Adapted quantities are estimates.",
+      "method": "Boil diced parsnips until tender, about 12–15 minutes. Drain well, then mash with butter, chopped parsley and part of the salt and pepper.\nDust seasoned cod with flour. Pan-sear in olive oil until the fish flakes easily, turning once. Set aside. Wilt the spinach with one sliced garlic clove and a little oil, then divide among plates.\nSizzle the rest of the garlic in the fish pan. Stir in sherry vinegar and brown sugar and reduce to a syrupy glaze. Spoon it over the cod and serve with the mash, spinach and lemon wedges."
+    },
+    {
+      "id": "weekly-20261113-pumpkin-tahini",
+      "name": "Harissa pumpkin & crisp chickpeas with lime tahini",
+      "active": 20,
+      "total": 50,
+      "base": 4,
+      "protein": "vegetarian",
+      "style": "Middle Eastern inspired",
+      "complexity": "simple",
+      "ingredients": {
+        "squash": 900,
+        "chickpea": 480,
+        "harissa": 25,
+        "garlic": 1,
+        "oil": 45,
+        "tahini": 60,
+        "soy": 25,
+        "lime": 1,
+        "sugar": 8,
+        "coriander": 0.25,
+        "springonion": 40,
+        "sesame": 12,
+        "salt": 0.5,
+        "blackpepper": 0.25
+      },
+      "months": [
+        9,
+        10,
+        11
+      ],
+      "source": "https://ottolenghi.co.uk/pages/recipes/harissa-roast-pumpkin-tahini-sauce",
+      "weekly": true,
+      "note": "Adapted from Ottolenghi’s pumpkin side. Adds drained tinned chickpeas and sesame for a main, with less harissa and brown sugar in place of maple syrup. Adapted timing and garnish weights are estimates.",
+      "method": "Heat the oven to 220°C. Toss bite-size pumpkin pieces with most of the oil, crushed garlic, salt and pepper. Put harissa on some or all of the pieces to suit your table. Roast for about 30–35 minutes, turning once.\nDry the drained chickpeas, toss with the remaining oil and roast on a second tray for about 25 minutes, until crisp at the edges. Add the sesame for the final 3 minutes.\nWhisk tahini with soy, lime juice and brown sugar, loosening it with a splash of water. Serve the pumpkin and chickpeas with the sauce, sliced spring onions and coriander."
     }
   ]
 }
