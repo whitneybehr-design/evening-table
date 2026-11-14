@@ -92,3 +92,162 @@ RECIPES.push(R('aji-de-gallina-coop','Ají de gallina — Coop-friendly Peruvian
  note:'Adapted from Our Modern Kitchen. Roasted yellow Peperoni and a little fresh red Peperoncino stand in for ají amarillo: similar sweetness and heat, with a different chilli aroma. Start with half the chilli. The original already uses crème fraîche. This version starts with raw Poulet, cuts back on dressing oil and adds green beans. Time is an estimate.',
  method:'Grill halved yellow peppers skin-side up until blistered, about 10–15 minutes. Cover briefly, then peel.\nMeanwhile, gently poach the chicken in bouillon in a snug pan until cooked through, adding water if needed. Shred the meat and reserve the liquid. Cook the rice, boil the eggs and steam the beans.\nSoften shallot, garlic and chilli in one-third of the oil. Stir in cumin, ground coriander and turmeric. Blend with the peppers, ground walnuts and enough poaching liquid to make a pourable sauce.\nSimmer the sauce until it coats a spoon. Stir in chicken, crème fraîche and Parmesan over low heat; season with salt and pepper.\nChop the olives, parsley and half the fresh coriander; dress with the remaining oil and half the lime juice. Toss the rice with the rest of the lime and coriander. Serve with halved eggs, finely diced onion, beans and the olive dressing.'
 }));
+
+// Permanent slow-cooker soups, with quantities for six main-course portions.
+Object.assign(ING,{
+  "blackbean": [
+    "Black beans, tinned & drained",
+    "Pantry",
+    "g"
+  ],
+  "corn": [
+    "Sweetcorn, tinned & drained",
+    "Pantry",
+    "g"
+  ],
+  "wildricemix": [
+    "Wild rice blend / Wildreis-Mix, dry",
+    "Pantry",
+    "g",
+    "starch"
+  ],
+  "splitpea": [
+    "Dried green split peas / grüne Schälerbsen",
+    "Pantry",
+    "g"
+  ],
+  "cidervinegar": [
+    "Apple cider vinegar / Apfelessig",
+    "Pantry",
+    "ml"
+  ],
+  "redwinevinegar": [
+    "Red wine vinegar",
+    "Pantry",
+    "ml"
+  ],
+  "kidneybean": [
+    "Kidney beans, tinned & drained",
+    "Pantry",
+    "g"
+  ],
+  "vegcheese": [
+    "Vegetarian hard cheese (microbial rennet)",
+    "Dairy & eggs",
+    "g"
+  ],
+  "bacon": [
+    "Smoked bacon / Bratspeck",
+    "Meat & fish",
+    "g"
+  ],
+  "kale": [
+    "Kale / Federkohl",
+    "Vegetables & herbs",
+    "g",
+    "veg"
+  ],
+  "cuminseed": [
+    "Cumin seeds",
+    "Spices",
+    "tsp"
+  ],
+  "pumpkinseed": [
+    "Pumpkin seeds",
+    "Pantry",
+    "g"
+  ],
+  "gnocchi": [
+    "Chilled potato gnocchi",
+    "Chilled",
+    "g",
+    "starch"
+  ],
+  "cornstarch": [
+    "Cornstarch / Maisstärke",
+    "Pantry",
+    "g"
+  ]
+});
+RECIPES.push(
+  R("slow-enchilada", "Chicken enchilada soup with lime & toasted tortilla", 25, 280, "chicken", "Mexican inspired", {"thigh":550,"chickenstock":850,"canTomato":400,"passata":250,"blackbean":480,"corn":150,"pepper":180,"onion":150,"garlic":3,"cumin":1,"smokedpaprika":1,"oregano":1,"oil":15,"tortilla":2,"lime":2,"coriander":0.25,"yoghurt":120,"salt":0.5}, COOL, false, {
+    base: 6,
+    slowCooker: true,
+    complexity: "simple",
+    source: "https://www.gimmesomeoven.com/slow-cooker-chicken-enchilada-soup-recipe/comment-page-3/",
+    note: "Gimme Some Oven · 4.9/5 from 97 reviews. Mild adaptation with tomato, smoked paprika and sweet pepper in place of ready-made enchilada sauce and green chillies.",
+    method: "Soften diced onion and pepper in oil. Add garlic, cumin, smoked paprika and oregano, then scrape into the slow cooker with thawed chicken, stock, tomatoes, passata and salt.\nCook on HIGH 3–4 hours or LOW 6–8 hours until the chicken reaches 74°C and shreds easily. Shred it and return it with the drained beans and corn for the final 15 minutes on HIGH, until hot.\nToast thin tortilla strips in a dry pan. Finish the soup with lime juice and serve with the strips, chopped coriander and yoghurt."
+  }),
+  R("slow-wild-rice", "Chicken & wild rice soup with lemon and thyme", 30, 390, "chicken", "Minnesota inspired", {"thigh":600,"wildricemix":120,"chickenstock":1500,"carrot":230,"celery":140,"onion":150,"garlic":3,"thyme":0.25,"butter":30,"plainflour":30,"milk":300,"lemon":1,"parsley":0.25,"salt":0.5,"blackpepper":0.5}, COOL, false, {
+    base: 6,
+    slowCooker: true,
+    complexity: "confident",
+    source: "https://pinchofyum.com/crockpot-chicken-wild-rice-soup",
+    note: "Pinch of Yum · 4.5/5 from 219 reviews. Uses thighs, a lighter milk roux and Coop-style wild rice blend, cooked separately so the grains keep their texture.",
+    method: "Put thawed chicken, diced carrot, celery, onion, garlic, thyme sprigs and stock into the slow cooker. Cook on LOW about 6 hours, until the chicken reaches 74°C. Near the end, cook the rice blend separately according to the pack.\nLift out the chicken to shred and discard the thyme stems. In a saucepan, cook flour in melted butter for a minute. Whisk in milk and simmer until smooth and thick enough to coat a spoon.\nStir the roux, chicken and cooked rice into the hot soup. Finish with parsley, lemon zest, a squeeze of juice, salt and pepper."
+  }),
+  R("slow-sofrito-lentil", "Chicken & green lentil soup with lime sofrito", 25, 265, "chicken", "Latin American inspired", {"thigh":600,"lentil":320,"chickenstock":1600,"canTomato":300,"carrot":240,"pepper":150,"onion":130,"garlic":3,"coriander":0.5,"oil":15,"turmeric":1,"cumin":1,"oregano":0.5,"lime":1,"salt":0.5,"blackpepper":0.25}, COOL, false, {
+    base: 6,
+    slowCooker: true,
+    complexity: "simple",
+    source: "https://www.skinnytaste.com/slow-cooker-chicken-and-lentil-soup/",
+    note: "Skinnytaste · 4.91/5 from 66 votes. Uses mild tinned tomatoes and a fresh pepper-and-herb sofrito in place of Rotel and adobo seasoning.",
+    method: "Pulse pepper, onion, garlic and the coriander stems to a rough paste. Fry in oil until fragrant and softened, then stir in cumin, turmeric and oregano.\nTransfer to the cooker with thawed chicken, rinsed lentils, stock and diced carrots. Cook on HIGH about 4 hours or LOW about 8 hours. Add the tomatoes for the final 30 minutes, once the lentils are nearly tender.\nWhen the chicken reaches 74°C, shred it into the soup. Season with salt and pepper, then finish with lime juice and chopped coriander leaves."
+  }),
+  R("slow-split-pea", "Split pea & ham soup with cider vinegar and parsley", 20, 320, "pork", "British inspired", {"splitpea":300,"ham":280,"chickenstock":1400,"celeriac":250,"celery":120,"carrot":180,"onion":130,"garlic":2,"bayleaf":1,"thyme":0.25,"blackpepper":0.5,"parsley":0.25,"cidervinegar":15}, COOL, false, {
+    base: 6,
+    slowCooker: true,
+    complexity: "simple",
+    source: "https://www.spendwithpennies.com/crockpot-split-pea-soup/",
+    note: "Spend With Pennies · 4.98/5 from 267 votes. Diced cooked ham replaces the ham bone. Celeriac and cider vinegar are added.",
+    method: "Rinse and sort the split peas. Put them in the cooker with stock, diced celeriac, celery, carrots and onion, plus garlic, bay, thyme and pepper.\nCook on HIGH 4–5 hours or LOW about 8 hours, until the peas collapse when stirred. Add diced cooked ham for the final 30 minutes and let the soup come back up to heat.\nRemove the bay and thyme stems. Stir vigorously for a creamy texture, then finish with cider vinegar and chopped parsley."
+  }),
+  R("slow-smoky-ham-bean", "Smoky ham & white bean soup with rosemary", 25, 295, "pork", "Rustic European", {"ham":300,"beans":480,"chickenstock":1200,"canTomato":400,"carrot":220,"celery":140,"onion":140,"garlic":3,"potato":250,"peas":150,"bayleaf":1,"smokedpaprika":1,"rosemary":0.25,"redwinevinegar":15,"oil":15,"blackpepper":0.5}, COOL, false, {
+    base: 6,
+    slowCooker: true,
+    complexity: "simple",
+    source: "https://www.wellplated.com/slow-cooker-ham-and-bean-soup/",
+    note: "Well Plated · 4.95/5 from 17 reviews. Uses cooked ham and tinned cannellini beans, so the timing is for the adapted version.",
+    method: "Soften diced onion, carrots and celery in olive oil. Stir in garlic and smoked paprika, then tip into the slow cooker with stock, tomatoes, diced potatoes, bay, rosemary and pepper.\nCook on HIGH about 3–4 hours or LOW 6–7 hours until the potatoes are tender. Stir in the diced cooked ham, drained beans and peas for the final 30 minutes on HIGH, until piping hot.\nRemove the bay and rosemary stems. Crush a few beans against the side of the pot and finish with red wine vinegar."
+  }),
+  R("slow-winter-minestrone", "Winter minestrone with two beans & rosemary", 25, 290, "vegetarian", "Italian inspired", {"canTomato":800,"stock":1400,"carrot":230,"celery":150,"onion":180,"garlic":4,"oregano":1,"rosemary":0.25,"bayleaf":2,"kidneybean":240,"beans":240,"savoy":220,"pasta":120,"spinach":100,"oil":20,"vegcheese":45,"salt":0.5,"blackpepper":0.5}, COOL, false, {
+    base: 6,
+    slowCooker: true,
+    complexity: "simple",
+    source: "https://www.littlespicejar.com/homemade-minestrone-soup-slow-cooker/",
+    note: "Little Spice Jar · 4.93/5 from 638 votes. Uses savoy cabbage and a smaller pasta portion. Choose vegetarian hard cheese with microbial rennet.",
+    method: "Put tomatoes, stock, diced carrots, celery, onion, garlic, oregano, rosemary and bay in the cooker. Season and cook on HIGH 3–4 hours or LOW 6–8 hours until the roots are tender.\nStir in drained tinned beans, sliced savoy and small pasta. Cook on HIGH for 20–25 minutes, or until the pasta is tender. Stir in spinach just before serving.\nRemove the woody herbs and bay. Finish each bowl with grated vegetarian hard cheese and a little olive oil."
+  }),
+  R("slow-fennel-pork-kale", "Fennel pork & kale soup with crisp bacon", 25, 285, "pork", "Tuscan inspired", {"pork":420,"bacon":70,"potato":400,"onion":150,"garlic":3,"chickenstock":1250,"kale":240,"cream":120,"fennelseed":1.5,"oregano":1,"blackpepper":0.5,"salt":0.5}, COOL, false, {
+    base: 6,
+    slowCooker: true,
+    complexity: "confident",
+    source: "https://www.themagicalslowcooker.com/slow-cooker-zuppa-toscana/",
+    note: "The Magical Slow Cooker · 5/5 from 26 votes. Uses fennel-seasoned ground pork, extra kale and Swiss half cream in place of sausage and heavy cream.",
+    method: "Fry chopped bacon until crisp and set it aside. Brown the ground pork in the same pan with crushed fennel seed, oregano and pepper. Break it into small pieces and cook it through.\nTransfer the pork to the slow cooker with diced potato, onion, garlic, stock and salt. Cook on HIGH about 4 hours or LOW about 7 hours, until the potatoes are tender.\nStir in chopped kale and half cream. Cook for another 20 minutes on HIGH, until the kale is tender and the soup is hot. Scatter the bacon over each bowl."
+  }),
+  R("slow-carrot-cumin", "Carrot, ginger & red lentil soup with toasted cumin", 20, 200, "vegetarian", "North African inspired", {"carrot":900,"redlentil":240,"stock":1400,"milk":180,"ginger":20,"cuminseed":2,"oil":25,"yoghurt":150,"lemon":1,"salt":0.5,"pumpkinseed":35}, COOL, false, {
+    base: 6,
+    slowCooker: true,
+    complexity: "simple",
+    source: "https://www.bbcgoodfood.com/recipes/spiced-carrot-lentil-soup",
+    note: "Good Food · 4.5/5 from 1,569 ratings. Uses the publisher’s slow-cooker method as a base, with fresh ginger, lemon and pumpkin seeds.",
+    method: "Toast the cumin seeds in a dry pan and set aside half. Put the rest in the cooker with grated or thinly sliced carrots, rinsed red lentils, grated ginger, oil, stock and salt.\nCook on HIGH about 3 hours, until the carrots and lentils are soft. Stir in the milk and blend until as smooth as you like. Heat through and add lemon juice.\nToast the pumpkin seeds in a dry pan. Serve with a spoon of yoghurt, the reserved cumin and the seeds."
+  }),
+  R("slow-porcini-barley", "Porcini & pearl barley soup with lemon-parsley oil", 25, 265, "vegetarian", "Central European inspired", {"mushroom":550,"porcini":20,"barley":150,"stock":1650,"carrot":220,"celery":120,"onion":150,"garlic":3,"bayleaf":1,"thyme":0.25,"oil":35,"parsley":0.5,"lemon":1,"salt":0.5,"blackpepper":0.5}, COOL, false, {
+    base: 6,
+    slowCooker: true,
+    complexity: "confident",
+    source: "https://itsavegworldafterall.com/slow-cooker-mushroom-barley-stew/",
+    note: "It’s a Veg World After All · 4.96/5 from 42 votes. Adds porcini, browned mushrooms and a lemon-parsley finish. Quantities make six main-course bowls.",
+    method: "Soak porcini for 15 minutes in a mug of hot stock. Strain that liquid through a fine sieve lined with kitchen paper and chop the mushrooms. Brown quartered fresh mushrooms in part of the oil.\nAdd both mushrooms, strained liquid, remaining stock, rinsed barley, diced vegetables, garlic, bay and thyme to the cooker. Season and cook on HIGH 3–4 hours or LOW 6–8 hours until the barley is tender.\nRemove the bay and thyme stems. Stir chopped parsley and lemon zest into the remaining oil. Spoon it over each bowl and finish with lemon juice."
+  }),
+  R("slow-chicken-gnocchi", "Chicken, leek & gnocchi soup with sage and spinach", 30, 350, "chicken", "Italian inspired", {"thigh":600,"chickenstock":1350,"leek":280,"carrot":180,"celery":120,"garlic":3,"thyme":0.25,"milk":250,"cornstarch":15,"gnocchi":400,"spinach":200,"sage":0.25,"butter":25,"salt":0.5,"blackpepper":0.5}, COOL, false, {
+    base: 6,
+    slowCooker: true,
+    complexity: "confident",
+    source: "https://pinchofyum.com/crockpot-chicken-gnocchi-soup",
+    note: "Pinch of Yum · 4.6/5 from 210 reviews. Uses Swiss-style chilled gnocchi, milk, leeks and crisp sage in place of evaporated milk and bacon.",
+    method: "Put thawed chicken, sliced leek, diced carrots and celery, garlic, thyme, stock and seasoning in the cooker. Cook on HIGH 4–5 hours or LOW 6–8 hours, until the chicken reaches 74°C and pulls apart easily.\nShred the chicken and discard the thyme stems. Whisk the starch into cold milk, stir it into the hot soup and cook on HIGH until lightly thickened. Boil the gnocchi separately according to the pack, then stir them into the soup with the spinach.\nFry sage leaves in butter until crisp. Spoon the sage and browned butter over the bowls."
+  })
+);
