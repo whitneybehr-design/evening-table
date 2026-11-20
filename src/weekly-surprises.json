@@ -1,12 +1,12 @@
 {
-  "updatedOn": "2026-11-13",
+  "updatedOn": "2026-11-20",
   "featuredIds": [
-    "weekly-20261113-dukkah-chicken",
-    "weekly-20261113-tarragon-chicken",
-    "weekly-20261113-sage-pork",
-    "weekly-20261113-citrus-seabass",
-    "weekly-20261113-sherry-cod",
-    "weekly-20261113-pumpkin-tahini"
+    "weekly-20261120-harissa-chicken",
+    "weekly-20261120-salmon-greens",
+    "weekly-20261120-pork-cabbage",
+    "weekly-20261120-trout-fennel",
+    "weekly-20261120-pork-apple",
+    "weekly-20261120-winter-lentil-soup"
   ],
   "ingredients": {
     "redcurrypaste": [
@@ -166,6 +166,49 @@
       "Tarragon / Estragon",
       "Vegetables & herbs",
       "bunch"
+    ],
+    "cremefraiche": [
+      "Crème fraîche, light",
+      "Dairy & eggs",
+      "g"
+    ],
+    "broadbean": [
+      "Broad beans, frozen",
+      "Frozen",
+      "g",
+      "veg"
+    ],
+    "redcabbage": [
+      "Red cabbage / Rotkabis",
+      "Vegetables & herbs",
+      "g",
+      "veg"
+    ],
+    "pear": [
+      "Pears",
+      "Vegetables & herbs",
+      "g",
+      "veg"
+    ],
+    "balsamic": [
+      "Balsamic vinegar",
+      "Pantry",
+      "ml"
+    ],
+    "wholegrainmustard": [
+      "Wholegrain mustard",
+      "Pantry",
+      "g"
+    ],
+    "trout": [
+      "Trout fillets / Forellenfilets",
+      "Meat & fish",
+      "g"
+    ],
+    "tomatopuree": [
+      "Tomato purée",
+      "Pantry",
+      "g"
     ]
   },
   "recipes": [
@@ -608,6 +651,208 @@
       "weekly": true,
       "note": "Adapted from Ottolenghi’s pumpkin side. Adds drained tinned chickpeas and sesame for a main, with less harissa and brown sugar in place of maple syrup. Adapted timing and garnish weights are estimates.",
       "method": "Heat the oven to 220°C. Toss bite-size pumpkin pieces with most of the oil, crushed garlic, salt and pepper. Put harissa on some or all of the pieces to suit your table. Roast for about 30–35 minutes, turning once.\nDry the drained chickpeas, toss with the remaining oil and roast on a second tray for about 25 minutes, until crisp at the edges. Add the sesame for the final 3 minutes.\nWhisk tahini with soy, lime juice and brown sugar, loosening it with a splash of water. Serve the pumpkin and chickpeas with the sauce, sliced spring onions and coriander."
+    },
+    {
+      "id": "weekly-20261120-harissa-chicken",
+      "name": "Harissa chicken, roast squash & lemon yoghurt",
+      "active": 15,
+      "total": 50,
+      "base": 4,
+      "protein": "chicken",
+      "style": "North African inspired",
+      "complexity": "simple",
+      "ingredients": {
+        "chicken": 600,
+        "squash": 900,
+        "onion": 300,
+        "harissa": 45,
+        "greekyoghurt": 200,
+        "oil": 25,
+        "lemon": 1,
+        "mint": 0.5
+      },
+      "months": [
+        0,
+        1,
+        2,
+        9,
+        10,
+        11
+      ],
+      "source": "https://www.bbcgoodfood.com/recipes/harissa-chicken-traybake-0",
+      "weekly": true,
+      "note": "Adapted from Good Food (4.6/5, 78 ratings; recipe describes a low-calorie version). The published recipe scales from four; squash and onion quantities are approximate and lemon-mint yoghurt is an added finish.",
+      "method": "Heat the oven to 200°C. Mix most of the harissa with half the yoghurt and coat the chicken; season. Toss squash and onion with the remaining harissa, olive oil and salt, then roast for 10 minutes.\nAdd chicken to the tray and roast 20–25 minutes more, turning the vegetables once, until chicken is cooked and squash is browned.\nStir lemon zest and juice with the remaining yoghurt and chopped mint. Serve as a cool, sharp sauce."
+    },
+    {
+      "id": "weekly-20261120-salmon-greens",
+      "name": "Salmon, leeks & winter greens in chive crème fraîche",
+      "active": 15,
+      "total": 35,
+      "base": 4,
+      "protein": "fish",
+      "style": "Modern British",
+      "complexity": "simple",
+      "ingredients": {
+        "salmon": 600,
+        "leek": 450,
+        "chickenstock": 250,
+        "cremefraiche": 100,
+        "peas": 200,
+        "broadbean": 200,
+        "chive": 0.5,
+        "lemon": 1
+      },
+      "months": [
+        0,
+        1,
+        2,
+        9,
+        10,
+        11
+      ],
+      "source": "https://www.bbcgoodfood.com/recipes/salmon-greens-creme-fraiche",
+      "weekly": true,
+      "note": "Adapted from Good Food (4.7/5, 154 ratings). More leeks and greens, smaller crème fraîche portion, lemon finish; chicken stock is suitable for this family recipe.",
+      "method": "Soften sliced leeks in a little oil for 8 minutes. Add stock and simmer until reduced slightly; stir in crème fraîche, lemon zest and pepper.\nAdd peas and broad beans, nestle salmon in the pan, cover and simmer gently for 12–15 minutes, depending on thickness, until just cooked.\nScatter with snipped chives and lemon juice. Keep the sauce at a gentle simmer so it stays silky."
+    },
+    {
+      "id": "weekly-20261120-pork-cabbage",
+      "name": "Mustard pork, braised red cabbage, pears & walnuts",
+      "active": 15,
+      "total": 60,
+      "base": 4,
+      "protein": "pork",
+      "style": "British autumn",
+      "complexity": "confident",
+      "ingredients": {
+        "pork": 500,
+        "redcabbage": 600,
+        "pear": 300,
+        "ginger": 15,
+        "stock": 300,
+        "balsamic": 30,
+        "walnut": 40,
+        "oil": 10,
+        "wholegrainmustard": 20,
+        "parsley": 0.25
+      },
+      "months": [
+        0,
+        1,
+        2,
+        9,
+        10,
+        11
+      ],
+      "source": "https://www.bbcgoodfood.com/recipes/pork-braised-red-cabbage-pears",
+      "weekly": true,
+      "note": "Adapted from Good Food (4.6/5, 5 ratings). Scale and seasoning amounts are estimates; add walnuts at the end for crunch and use vegetable bouillon for the cabbage.",
+      "method": "Shred cabbage and simmer covered with pear wedges, grated ginger, vegetable stock and balsamic vinegar for about 40 minutes, stirring occasionally. Stir in half the chopped walnuts.\nBrush pork fillet with oil and wholegrain mustard; grill or sear, turning, until just cooked through. Rest for 5 minutes before slicing.\nTaste the cabbage for acidity and seasoning. Serve with the pork and finish with remaining walnuts and parsley."
+    },
+    {
+      "id": "weekly-20261120-trout-fennel",
+      "name": "Mustard-glazed trout, fennel & herby potato salad",
+      "active": 15,
+      "total": 40,
+      "base": 4,
+      "protein": "fish",
+      "style": "Scandinavian inspired",
+      "complexity": "confident",
+      "ingredients": {
+        "trout": 600,
+        "potato": 600,
+        "onion": 150,
+        "fennel": 300,
+        "lemon": 1,
+        "wholegrainmustard": 20,
+        "honey": 7,
+        "oil": 15,
+        "sourcream": 100,
+        "dill": 0.5,
+        "parsley": 0.5
+      },
+      "months": [
+        0,
+        1,
+        2,
+        9,
+        10,
+        11
+      ],
+      "source": "https://www.bbcgoodfood.com/recipes/scandi-trout-fennel-potato-salad",
+      "weekly": true,
+      "note": "Adapted from Good Food (4.7/5, 14 ratings). Reduce the potato portion and use modest sour cream; fresh trout is a Coop-friendly substitute where available.",
+      "method": "Boil potatoes until just tender. Toss thinly sliced onion and fennel with lemon juice and a pinch of salt. Mix mustard, honey, half the lemon zest and oil for the glaze.\nBrush trout with the glaze and bake at 200°C for about 10 minutes, until just opaque and flaking.\nFold sliced potatoes with sour cream, chopped dill and parsley, remaining zest and the quick-pickled fennel and onion. Serve with the trout."
+    },
+    {
+      "id": "weekly-20261120-pork-apple",
+      "name": "Pork medallions, caramelised apples & sage mustard sauce",
+      "active": 15,
+      "total": 40,
+      "base": 4,
+      "protein": "pork",
+      "style": "French country",
+      "complexity": "confident",
+      "ingredients": {
+        "pork": 500,
+        "apple": 450,
+        "chickenstock": 200,
+        "wholegrainmustard": 20,
+        "sage": 0.25,
+        "cremefraiche": 40,
+        "oil": 15,
+        "cabbage": 450
+      },
+      "months": [
+        0,
+        1,
+        2,
+        9,
+        10,
+        11
+      ],
+      "source": "https://www.bbcgoodfood.com/recipes/roast-pork-apples-mustard",
+      "weekly": true,
+      "note": "Adapted from Good Food (4.6/5, 50 ratings; 246 kcal per source serving). Adds a pile of quick wilted cabbage; timings depend on medallion thickness.",
+      "method": "Sear pork medallions in half the oil for about 2 minutes per side; remove to a plate. Add apple wedges and cook until golden and tender, about 8–10 minutes.\nAdd stock and mustard, simmer until lightly reduced, then return pork with chopped sage and cook gently until just cooked through.\nStir crème fraîche into the sauce off the heat. Quickly wilt shredded cabbage in remaining oil with a splash of water; serve alongside."
+    },
+    {
+      "id": "weekly-20261120-winter-lentil-soup",
+      "name": "Winter lentil soup, leek, celery & lemon-thyme yoghurt",
+      "active": 10,
+      "total": 40,
+      "base": 4,
+      "protein": "vegetarian",
+      "style": "Swiss winter",
+      "complexity": "simple",
+      "ingredients": {
+        "redlentil": 170,
+        "carrot": 300,
+        "celery": 200,
+        "leek": 300,
+        "tomatopuree": 40,
+        "thyme": 0.5,
+        "garlic": 4,
+        "stock": 1500,
+        "corianderseed": 1,
+        "yoghurt": 100,
+        "lemon": 1,
+        "oil": 15,
+        "parsley": 0.25
+      },
+      "months": [
+        0,
+        1,
+        2,
+        9,
+        10,
+        11
+      ],
+      "source": "https://www.bbcgoodfood.com/recipes/winter-vegetable-lentil-soup",
+      "weekly": true,
+      "note": "Adapted and doubled from Good Food (4.2/5, 110 ratings; 264 kcal per source serving). Adds a lemon-thyme yoghurt swirl and parsley; quantities are approximate for four.",
+      "method": "Soften diced carrot, celery and leek in olive oil. Stir in tomato purée, chopped garlic and ground coriander for 1 minute.\nAdd rinsed red lentils and vegetable bouillon; simmer 25–30 minutes until lentils and vegetables are tender. Blend about a third for a thicker, rustic texture.\nMix yoghurt with lemon zest and thyme leaves. Season the soup with lemon juice and pepper, then finish each bowl with the yoghurt and parsley."
     }
   ]
 }
